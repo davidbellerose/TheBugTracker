@@ -26,7 +26,7 @@
         <img class="media-object" src="https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png" alt="" style="width:30px;height:30px">
     }
 </a> *@
-@* 
+@*
 <strong>@btUser.FullName</strong>
 <span class="text-muted" style="font-size:x-small;">
     <strong>@Model.Company.Name</strong>
@@ -35,7 +35,6 @@
 
 <div>
     <div class="container-fluid">
-
         <!-- Info Pills -->
         <div class="row mt-2">
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -65,14 +64,14 @@
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
                 <a asp-action="UnassignedTickets" asp-controller="Tickets" style="text-decoration:none">
-                <div class="card text-center bg-warning">
-                    <div class="body">
-                        <div class="p-15 text-light">
-                            <h3>@Model.Tickets.Where(t => string.IsNullOrEmpty(t.DeveloperUserId)).Count()</h3>
-                            <span>Unassigned Tickets</span>
+                    <div class="card text-center bg-warning">
+                        <div class="body">
+                            <div class="p-15 text-light">
+                                <h3>@Model.Tickets.Where(t => string.IsNullOrEmpty(t.DeveloperUserId)).Count()</h3>
+                                <span>Unassigned Tickets</span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </a>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-6">
@@ -92,76 +91,108 @@
                 </div>
             </div>
         </div>
+        @* TABBED CHARTS *@
+        <ul class="nav nav-tabs d-none d-lg-flex mt-5" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Projects by Priority</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Project Ticket Count %</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Tickets by Priority</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="four-tab" data-bs-toggle="tab" data-bs-target="#four-tab-pane" type="button" role="tab" aria-controls="four-tab-pane" aria-selected="false">Tickets by Status</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="five-tab" data-bs-toggle="tab" data-bs-target="#five-tab-pane" type="button" role="tab" aria-controls="five-tab-pane" aria-selected="false">Project: Tickets vs Developers</button>
+            </li>
+        </ul>
 
-        <div class="row gy-2">
-            <div class="col-md-12 col">
-                <div class="row col-cols-4 mt-5 bg-secondary">
-                    <div class="card col m-1 p-2">
-                        <div class="card-body">
-                            <h5>Projects by Priority</h5>
-                            <div id="chart3D"></div>
-                        </div>
+
+        <div class="tab-content accordion" id="myTabContent">
+            <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+
+                <h2 class="accordion-header d-lg-none" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Projects by Priority
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+                    <div class="accordion-body">
+                        <div id="chart3D"></div>
                     </div>
-                    <div class="card col m-1 p-2">
-                        <div class="card-body">
-                            <h5>Project Tickets Count (%)</h5>
-                            <div id="donut"></div>
-                        </div>
+                </div>
+
+            </div>
+
+
+            <div class="tab-pane fade accordion-item" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                <h2 class="accordion-header d-lg-none" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Project Ticket Count %
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
+                    <div class="accordion-body">
+                        <div id="donut"></div>
                     </div>
-                    <div class="card col m-1 p-2">
-                        <div class="card-body">
-                            <h5>Tickets by Priority</h5>
-                            <!-- Morris: Donut -->
-                            <div class="col-md-12">
-                                <div id="legend" class="donut-legend" style="font-size:x-small"></div>
-                            </div>
-                            <div class="col-md-12">
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade accordion-item" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                <h2 class="accordion-header d-lg-none" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Tickets by Priority
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingThree" data-bs-parent="#myTabContent">
+                    <div class="accordion-body">
+                        <div class="row ticketPriority">
+                            <div class="col-6">
                                 <div class="chart chart-md" id="morrisTicketPriority"></div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="card col m-1 p-2">
-                        <div class="card-body">
-                            <h5>Tickets by Status</h5>
-                            <!-- ChartJS: Pie/Doughnut -->
-                            <div class="col-md-12">
-                                <!--  Chart.js Canvas Tag -->
-                                <canvas id="donutChart"></canvas>
+                            <div class="col-6">
+                                <div id="legend" class="donut-legend" style="font-size:x-small"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row gy-2">
-            <div class="cols mt-5 bg-secondary">
-                <div class="card col m-1 p-2">
-                    <div class="card-body" style="height:600px">
-                        <h5>Project: Tickets vs Developers</h5>
-                        <!-- HTML -->
+
+
+            <div class="tab-pane fade accordion-item" id="four-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                <h2 class="accordion-header d-lg-none" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Tickets by Status
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                    <div class="accordion-body">
+                        <canvas id="donutChart" style="height: 80%;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="tab-pane fade accordion-item" id="five-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                <h2 class="accordion-header d-lg-none" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        Project: Tickets vs Developers
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
+                    <div class="accordion-body">
                         <div id="chartdiv"></div>
                     </div>
                 </div>
             </div>
         </div>
-
-
-        <div class="row gy-2">
-            <div class="cols mt-5 bg-secondary">
-                <div class="card col m-1 p-2">
-                    <div class="card-body" style="height:600px;overflow-y:auto;">
-                        <h5>Project: Tickets vs Developers</h5>
-                        <!-- HTML -->
-                        <div id="plotlyChart"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
+        @* END TABBED CHARTS *@
     </div>
-    <hr />
-    <div class="mt-5 ">
+    <div class="mt-5">
         <div class="row">
             @* Projects Table *@
             <div class="col">
@@ -308,10 +339,12 @@
     </div>
 </div>
 
-@section scripts{
+@section scripts {
     <!--Google Charts-->
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
+
+    @* PROJECT PRIORITY *@
     <script type="text/javascript">
         google.load("visualization", "1", { packages: ["corechart"] });
         google.setOnLoadCallback(drawChart);
@@ -323,18 +356,22 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (result) {
-                    var data = google.visualization.arrayToDataTable(result);
 
+                    var data = google.visualization.arrayToDataTable(result);
                     //3D Pie
                     var options = {
                         title: 'Project Priority',
                         is3D: true,
                         chartArea: { left: 0, bottom: 15, width: '100%', height: '100%' },
-                        legend: { position: 'bottom' }
-
+                        plugins: { tooltip: { enabled: false } },
+                        hover: false,
+                        pointHoverRadius: 0,
+                        pointRadius: 0,
+                        pointHitRadius: 0
                     };
 
                     var chart = new google.visualization.PieChart($("#chart3D")[0]);
+
                     chart.draw(data, options);
                 },
                 failure: function (rresult) {
@@ -346,6 +383,8 @@
             });
         }
     </script>
+
+    @* TICKET COUNT *@
     <script type="text/javascript">
         google.load("visualization", "1", { packages: ["corechart"] });
         google.setOnLoadCallback(drawChart);
@@ -363,8 +402,14 @@
                     var options = {
                         title: 'Company Ticket Distribution',
                         pieHole: 0.3,
-                        chartArea: { left: 0, bottom: 15, width: '100%', height: '100%' },
-                        legend: { position: 'bottom' }
+                        chartArea: { left: 0, bottom: 0, width: '100%', height: '100%' },
+                        legend: { position: 'right' },
+                        plugins: { tooltip: { enabled: false } },
+                        hover: false,
+                        pointHoverRadius: 0,
+                        pointRadius: 0,
+                        pointHitRadius: 0
+
                     };
                     var chart = new google.visualization.PieChart($("#donut")[0]);
                     chart.draw(data, options);
@@ -379,29 +424,24 @@
         }
     </script>
 
-    @* Morris Donut Chart *@
+    @* Morris Donut Chart TICKETS BY PRIORITY *@
     <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script>
 
         var morrisDonutData = [{
             label: "Low",
-            value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BTTicketPriority.Low)).Count()
-                                            }, {
+            value: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low)).Count()
+                                                                                                                        }, {
             label: "Medium",
-            value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BTTicketPriority.Medium)).Count()
-                                            }, {
+            value: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Medium)).Count()
+                                                                                                                        }, {
             label: "High",
-            value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BTTicketPriority.High)).Count()
-                                            }, {
+            value: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.High)).Count()
+                                                                                                                        }, {
             label: "Urgent",
-            value: @Model.Tickets.Where(t=>t.TicketPriority.Name == nameof(BTTicketPriority.Urgent)).Count()
-                                            }];
-
-
-        /*
-        Morris: Donut
-        */
+            value: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Urgent)).Count()
+                                                                                                                    }];
         if ($('#morrisTicketPriority').get(0)) {
             var donutChart = Morris.Donut({
                 resize: true,
@@ -411,7 +451,7 @@
             });
 
             donutChart.options.data.forEach(function (label, i) {
-                var legendItem = $('<span></span>').text(label['label'] + ": " + label['value']).prepend('<span>&nbsp;</span>');
+                var legendItem = $('<br><span></span>').text(label['label'] + ": " + label['value']).prepend('<span>&nbsp;</span>');
                 legendItem.find('span')
                     .css('backgroundColor', donutChart.options.colors[i])
                     .css('width', '20px')
@@ -422,11 +462,12 @@
         };
     </script>
 
-    <!-- *** Begin Chart JS Pie/Donut *** -->
+    <!-- *** Begin Chart JS Pie/Donut TICKETS BY STATUS *** -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
     <script>
 
-        var donutChartCanvas = $('#donutChart').get(0).getContext('2d');
+        // var donutChartCanvas = $('#donutChart').get(0).getContext('2d');
+        var donutChartCanvas = document.getElementById('donutChart').getContext('2d');
         var donutData = {
             labels: [
                 '@nameof(BTTicketStatus.Development)',
@@ -437,11 +478,11 @@
             datasets: [
                 {
                     data: [
-        @Model.Tickets.Where(t=> t.TicketStatus.Name == nameof(BTTicketStatus.Development)).Count(),
-        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BTTicketStatus.New)).Count(),
-        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BTTicketStatus.Resolved)).Count(),
-        @Model.Tickets.Where(t=> t.TicketStatus.Name ==nameof(BTTicketStatus.Testing)).Count()
-                                        ],
+        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Development)).Count(),
+        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.New)).Count(),
+        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count(),
+        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Testing)).Count()
+                                                                                                                    ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -460,7 +501,13 @@
 
         var donutOptions = {
             maintainAspectRatio: false,
-            responsive: true,
+            responsive: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }, 
+                tooltip: { enabled: false }
+            },
         };
         //Create pie or douhnut chart
         // You can switch between pie and douhnut using the method below.
@@ -505,9 +552,12 @@
                     categoryAxis.renderer.grid.template.location = 0;
                     categoryAxis.renderer.cellStartLocation = 0.1;
                     categoryAxis.renderer.cellEndLocation = 0.9;
+                    categoryAxis.renderer.minGridDistance = 20;
+                    categoryAxis.renderer.minWidth = 120;
 
                     var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
                     valueAxis.renderer.opposite = true;
+                    valueAxis.renderer.maxLabelPosition = 0.98;
 
                     // Create series
                     function createSeries(field, name) {
@@ -525,6 +575,13 @@
                         valueLabel.label.dx = 10;
                         valueLabel.label.hideOversized = false;
                         valueLabel.label.truncate = false;
+                        series.sequencedInterpolation = true;
+                        series.defaultState.transitionDuration = 1000;
+                        series.sequencedInterpolationDelay = 100;
+
+
+                        chart.cursor = new am4charts.XYCursor();
+                        chart.cursor.behavior = "zoomY";
 
                         var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
                         categoryLabel.label.text = "{name}";
@@ -554,28 +611,28 @@
     <!-- *** End AM Charts *** -->
     <!--  Plotly Charts  -->
     <!-- Load plotly.js into the DOM -->
-    <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script>
-    <script>
-        $.ajax({
-            type: "POST",
-            url: "/Home/PlotlyBarChart",
-            data: '{}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (result) {
-                var data = result;
+    @* <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> *@
+    @* <script>
+    $.ajax({
+    type: "POST",
+    url: "/Home/PlotlyBarChart",
+    data: '{}',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (result) {
+    var data = result;
 
-                var layout = { barmode: 'group' };
+    var layout = { barmode: 'group' };
 
-                Plotly.newPlot('plotlyChart', data, layout);
-            },
-            failure: function (result) {
-                alert(result.d);
-            },
-            error: function (result) {
-                alert(result.d);
-            }
-        });
-    </script>
+    Plotly.newPlot('plotlyChart', data, layout);
+    },
+    failure: function (result) {
+    alert(result.d);
+    },
+    error: function (result) {
+    alert(result.d);
+    }
+    });
+    </script> *@
 
 }

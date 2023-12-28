@@ -116,7 +116,7 @@ namespace TheBugTracker.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
-
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
