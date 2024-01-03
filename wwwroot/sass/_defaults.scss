@@ -1,4 +1,17 @@
-﻿
+﻿$header-color: #176B87;
+$nav-color: #092635;
+$accent-color: #c6538c;
+$accenttext-color: #e2ecf0;
+$ham-color: #e2ecf0;
+$hover-color: #176B87;
+$navlink-color: #757575;
+$footer-color: #176B87;
+//--- pallete ----
+$dark-color: #092635;
+$medium-color: #1B4242;
+$light-color: #265073;
+$bright-color: #176B87;
+
 html {
     font-size: 14px;
     position: relative;
@@ -12,7 +25,11 @@ html {
 }
 
 
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
+a {
+    transition: background 0.2s, color 0.2s;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
 }

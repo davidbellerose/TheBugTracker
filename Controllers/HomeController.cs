@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using TheBugTracker.Data;
 using TheBugTracker.Extensions;
 using TheBugTracker.Models;
 using TheBugTracker.Models.ChartModels;
@@ -25,13 +27,17 @@ namespace TheBugTracker.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IBTProjectService _projectService;
         private readonly SignInManager<BTUser> signInManager;
+        private readonly ApplicationDbContext _applicationDbContext;
+        private readonly IBTTicketService _ticketService;
 
-        public HomeController(ILogger<HomeController> logger, IBTCompanyInfoService companyInfoService, IBTProjectService projectService, SignInManager<BTUser> signInManager)
+        public HomeController(ILogger<HomeController> logger, IBTCompanyInfoService companyInfoService, IBTProjectService projectService, SignInManager<BTUser> signInManager, ApplicationDbContext applicationDbContext, IBTTicketService ticketService)
         {
             _logger = logger;
             _companyInfoService = companyInfoService;
             _projectService = projectService;
             this.signInManager = signInManager;
+            _applicationDbContext = applicationDbContext;
+            _ticketService = ticketService;
         }
 
         public IActionResult Index()
@@ -61,57 +67,146 @@ namespace TheBugTracker.Controllers
         }
 
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        //*******************************************************
+        //     CHARTS                                   CHARTS
+        //******************************************************
+        //*************************************************************************************
+        //
+        // PROJECT PRIORITY                                             PROJECT PRIORITY
+        //
+        //******************************************************************************************
+
+        // Projects by Priority CanvasJs 
         [HttpPost]
-        public async Task<JsonResult> GglProjectTickets()
+        public async Task<JsonResult> ProjectPriority()
         {
             int companyId = User.Identity.GetCompanyId().Value;
 
             List<Project> projects = await _projectService.GetAllProjectsByCompany(companyId);
 
-            List<object> chartData = new();
-            chartData.Add(new object[] { "ProjectName", "TicketCount" });
 
-            foreach (Project prj in projects)
-            {
-                chartData.Add(new object[] { prj.Name, prj.Tickets.Count() });
-            }
-
-            return Json(chartData);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> GglProjectPriority()
-        {
-            int companyId = User.Identity.GetCompanyId().Value;
-
-            List<Project> projects = await _projectService.GetAllProjectsByCompany(companyId);
-
-            List<object> chartData = new();
-            chartData.Add(new object[] { "Priority", "Count" });
-
+            List<ProjectChartViewModel> chartData = new List<ProjectChartViewModel>();
 
             foreach (string priority in Enum.GetNames(typeof(BTProjectPriority)))
             {
                 int priorityCount = (await _projectService.GetAllProjectsByPriority(companyId, priority)).Count();
-                chartData.Add(new object[] { priority, priorityCount });
-            }
 
+                chartData.Add(new ProjectChartViewModel
+                {
+                    y = priorityCount,
+                    legendText = priority.ToString(),
+                    label = priority.ToString(),
+                });
+            }
             return Json(chartData);
         }
 
+        //*************************************************************************************
+        //
+        // PROJECT TICKET COUNTS                                                PROJECT TICKET COUNTS
+        //
+        //******************************************************************************************
         [HttpPost]
-        public async Task<JsonResult> AmCharts()
+        public async Task<JsonResult> ProjectTicketCount()
+        {
+            // Project Ticket Count
+            // same as ProjectPriority
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            List<Project> projects = await _projectService.GetAllProjectsByCompany(companyId);
+
+            List<ProjectChartViewModel> chartData = new List<ProjectChartViewModel>();
+
+            // labels will be project names
+            //List<string> labels = new List<string>();
+
+            //foreach (var name in projects)
+            //{
+            //    labels.Add(name.Name);
+            //}
+
+            //List<object> chartData = new();
+            //chartData.Add(labels);
+
+            //chartData.Add(new object[] { "ProjectName", "TicketCount" });
+
+            //List<int> data = new List<int>();
+
+
+            //foreach (Project prj in projects)
+            //{
+            //    chartData.Add(new object[] { prj.Name, prj.Tickets.Count() });
+            //}
+
+            // for each project name, count tickets
+
+            foreach (var project in projects)
+            {
+                //int ticketCount = (project.Tickets.Count());
+                //data.Add(ticketCount);
+                chartData.Add(new ProjectChartViewModel
+                {
+                    label = project.Name,
+                    y = project.Tickets.Count(),
+                });
+            }
+            return Json(chartData);
+        }
+
+        //*************************************************************************************
+        //
+        // TICKET PRIORITY                                                          TICKET PRIORITY
+        //
+        //******************************************************************************************
+        [HttpPost]
+        public async Task<JsonResult> TicketPriority()
+        {
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            // need list of tickets by company
+            // need ticket name and ticket count
+            //.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low)).Count()
+            //List<Ticket> tickets = await _ticketService.GetAllTicketsByCompanyAsync(companyId);
+
+            List<string> priorities = new List<string>();
+            var low = _applicationDbContext.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low)).ToString();
+            var medium = _applicationDbContext.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Medium)).ToString();
+            var high = _applicationDbContext.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.High)).ToString();
+            var urgent = _applicationDbContext.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Urgent)).ToString();
+
+            priorities.Add(low);
+            priorities.Add(medium);
+            priorities.Add(high);
+            priorities.Add(urgent);
+
+            List<TicketChartViewModel> chartData = new List<TicketChartViewModel>();
+
+            foreach (string priority in priorities)
+            {
+                int priorityCount = (await _ticketService.GetAllTicketsByPriorityAsync(companyId, priority)).Count();
+
+                chartData.Add(new TicketChartViewModel
+                {
+                    y = priorityCount,
+                    label = priority.ToString(),
+                });
+            }
+            return Json(chartData);
+        }
+
+        //*************************************************************************************
+        //
+        // TICKET V DEVELOPERS                                                 TICKET  V DEVELOPERS
+        //
+        //******************************************************************************************
+        [HttpPost]
+        public async Task<JsonResult> TicketVDeveloper()
         {
 
             AmChartData amChartData = new();
@@ -173,6 +268,5 @@ namespace TheBugTracker.Controllers
 
             return Json(plotlyData);
         }
-
     }
 }

@@ -18,9 +18,8 @@
 <div>
     <div class="container-fluid">
         <!-- Info Pills -->
-        <span id="stats"><img src="~/image/bar-chart-line.svg" />Stats</span>
-        <div class="row mt-2 mb-5">
-            <div class="col-lg-3 col-md-6 col-sm-6 pb-2">
+        <div class="row mt-2">
+            <div class="col-lg-3 col-md-6 col-sm-6">
                 <a asp-action="AllProjects" asp-controller="Projects" style="text-decoration:none">
                     <div class="card text-center pill-projects">
                         <div class="body">
@@ -32,7 +31,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 pb-2">
+            <div class="col-lg-3 col-md-6 col-sm-6">
                 <a asp-action="AllTickets" asp-controller="Tickets" style="text-decoration:none">
                     <div class="card text-center pill-tickets">
                         <div class="body">
@@ -45,7 +44,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 pb-2">
+            <div class="col-lg-3 col-md-6 col-sm-6">
                 <a asp-action="UnassignedTickets" asp-controller="Tickets" style="text-decoration:none">
                     <div class="card text-center pill-unassigned">
                         <div class="body">
@@ -57,7 +56,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 pb-2">
+            <div class="col-lg-3 col-md-6 col-sm-6">
                 <div class="card text-center pill-counts">
                     <div class="body">
                         <div class="p-15 text-light">
@@ -74,100 +73,101 @@
                 </div>
             </div>
         </div>
-
         @* TABBED CHARTS *@
-        <span id="insights"><img src="~/image/graph-up-arrow.svg" /> Insights</span>
-        <ul class="nav nav-tabs d-none d-lg-flex" id="myTab" role="tablist">
+        <ul class="nav nav-tabs d-none d-lg-flex mt-5" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
-                <button class="nav-link chart-btn active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Projects by Priority</button>
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Projects by Priority</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link chart-btn" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Project Ticket Count</button>
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Project Ticket Count %</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link chart-btn" id="four-tab" data-bs-toggle="tab" data-bs-target="#four-tab-pane" type="button" role="tab" aria-controls="four-tab-pane" aria-selected="false">Tickets by Status</button>
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Tickets by Priority</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link chart-btn" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Tickets by Priority</button>
+                <button class="nav-link" id="four-tab" data-bs-toggle="tab" data-bs-target="#four-tab-pane" type="button" role="tab" aria-controls="four-tab-pane" aria-selected="false">Tickets by Status</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link chart-btn" id="five-tab" data-bs-toggle="tab" data-bs-target="#five-tab-pane" type="button" role="tab" aria-controls="five-tab-pane" aria-selected="false">Project: Tickets vs Developers</button>
+                <button class="nav-link" id="five-tab" data-bs-toggle="tab" data-bs-target="#five-tab-pane" type="button" role="tab" aria-controls="five-tab-pane" aria-selected="false">Project: Tickets vs Developers</button>
             </li>
         </ul>
 
-        @* Projects by Priority *@
+
         <div class="tab-content accordion" id="myTabContent">
             <div class="tab-pane fade show active accordion-item" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
 
                 <h2 class="accordion-header d-lg-none" id="headingOne">
-                    <button class="accordion-button chart-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         Projects by Priority
                     </button>
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
                     <div class="accordion-body">
-                        <div id="projectPriority" style="height: 370px; width: 90%;"></div>
+                        <div id="chart3D"></div>
                     </div>
                 </div>
 
             </div>
 
-            @* Project Ticket Count *@
+
             <div class="tab-pane fade accordion-item" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
                 <h2 class="accordion-header d-lg-none" id="headingTwo">
-                    <button class="accordion-button chart-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                        Project Ticket Count
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Project Ticket Count %
                     </button>
                 </h2>
                 <div id="collapseTwo" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
-                    <div class="accordion-body d-flex justify-content-center align-items-center">
-                        <div class="chart-container">
-                            <div id="ticketCount" style="height: 370px; width: 90%;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @* Tickets by Status *@
-            <div class="tab-pane fade accordion-item" id="four-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                <h2 class="accordion-header d-lg-none" id="headingFour">
-                    <button class="accordion-button chart-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                        Tickets by Status
-                    </button>
-                </h2>
-                <div id="collapseFour" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
                     <div class="accordion-body">
-                        <div class="chart-container">
-                            <canvas id="ticketStatus" style="height: 70%; width: auto;"></canvas>
-                        </div>
+                        <div id="donut"></div>
                     </div>
                 </div>
             </div>
 
-            @* Tickets by Priority *@
+
             <div class="tab-pane fade accordion-item" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                 <h2 class="accordion-header d-lg-none" id="headingThree">
-                    <button class="accordion-button chart-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
                         Tickets by Priority
                     </button>
                 </h2>
                 <div id="collapseThree" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingThree" data-bs-parent="#myTabContent">
                     <div class="accordion-body">
-                        <div id="ticketPriority" style="height: 370px; width: 90%;"></div>
+                        <div class="row ticketPriority">
+                            <div class="col-6">
+                                <div class="chart chart-md" id="morrisTicketPriority"></div>
+                            </div>
+                            <div class="col-6">
+                                <div id="legend" class="donut-legend" style="font-size:x-small"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            @* Tickets vs Developers *@
+
+            <div class="tab-pane fade accordion-item" id="four-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                <h2 class="accordion-header d-lg-none" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Tickets by Status
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFour" data-bs-parent="#myTabContent">
+                    <div class="accordion-body">
+                        <canvas id="donutChart" style="height: 80%;"></canvas>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="tab-pane fade accordion-item" id="five-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
                 <h2 class="accordion-header d-lg-none" id="headingFive">
-                    <button class="accordion-button chart-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
                         Project: Tickets vs Developers
                     </button>
                 </h2>
                 <div id="collapseFive" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingFive" data-bs-parent="#myTabContent">
                     <div class="accordion-body">
-                        <div id="ticketVDeveloper" style="height: 370px; width: 100%;"></div>
+                        <div id="chartdiv"></div>
                     </div>
                 </div>
             </div>
@@ -182,6 +182,7 @@
                     <div class="card m-1 p-2">
                         <div class="card-header">
                             <h2>Projects</h2>
+
                         </div>
                         <div class="card-body">
 
@@ -320,177 +321,134 @@
     </div>
 </div>
 
-
-
 @section scripts {
-    @***
-***********************************************************************************
+    <!--Google Charts-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
 
-PROJECT PRIORITY               chart.js                              PROJECT PRIORITY
 
-****************************************************************************************** *@
-
-    <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-    <script>
-        window.onload = function () {
+    @* PROJECT PRIORITY *@
+    <script type="text/javascript">
+        google.load("visualization", "1", { packages: ["corechart"] });
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
             $.ajax({
                 type: "POST",
-                url: "/Home/ProjectPriority",
+                url: "/Home/GglProjectPriority",
                 data: '{}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: onSuccess,
-                error: onError
+                success: function (result) {
+
+                    var data = google.visualization.arrayToDataTable(result);
+                    //3D Pie
+                    var options = {
+                        title: 'Project Priority',
+                        is3D: true,
+                        chartArea: { left: 0, bottom: 15, width: '100%', height: '100%' },
+                        plugins: { tooltip: { enabled: false } },
+                        hover: false,
+                        pointHoverRadius: 0,
+                        pointRadius: 0,
+                        pointHitRadius: 0
+                    };
+
+                    var chart = new google.visualization.PieChart($("#chart3D")[0]);
+                    chart.draw(data, options);
+                },
+                failure: function (result) {
+                    alert(result.d);
+                },
+                error: function (result) {
+                    alert(result.d);
+                }
             });
-
-            function onSuccess(data) {
-
-                var chart = new CanvasJS.Chart("projectPriority", {
-                    theme: "light2", // "light1", "light2", "dark1", "dark2"
-                    exportEnabled: true,
-                    legend: {
-                        verticalAlign: "center",
-                        horizontalAlign: "right",
-                        fontSize: 20,
-                        fontFamily: "Helvetica",
-                        dockInsidePlotArea: false
-                    },
-                    options: {
-                        responsive: false
-                    },
-                    animationEnabled: false,
-                    data: [{
-                        type: "pie",
-                        startAngle: 25,
-                        toolTipContent: "<b>{label}</b>: {y}",
-                        showInLegend: "true",
-                        legendText: "{label}",
-                        indexLabelFontSize: 16,
-                        indexLabel: "{label} - {y}",
-                        dataPoints: data
-                    }]
-                });
-                chart.render();
-
-                $(".chart-btn").click(function () {
-                    chart.render();
-                });
-            }
-            function onError(err) {
-                console.log(err);
-            };
-
         }
     </script>
 
+    @* TICKET COUNT *@
+    <script type="text/javascript">
+        google.load("visualization", "1", { packages: ["corechart"] });
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            $.ajax({
+                type: "POST",
+                url: "/Home/GglProjectTickets",
+                data: '{}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    var data = google.visualization.arrayToDataTable(result);
 
-    @*
-*************************************************************************************
+                    //Donut
+                    var options = {
+                        title: 'Company Ticket Distribution',
+                        pieHole: 0.3,
+                        chartArea: { left: 0, bottom: 0, width: '100%', height: '100%' },
+                        legend: { position: 'right' },
+                        plugins: { tooltip: { enabled: false } },
+                        hover: false,
+                        pointHoverRadius: 0,
+                        pointRadius: 0,
+                        pointHitRadius: 0
 
-PROJECT PRIORITY               canvas.js                              PROJECT PRIORITY
+                    };
+                    var chart = new google.visualization.PieChart($("#donut")[0]);
+                    chart.draw(data, options);
+                },
+                failure: function (rresult) {
+                    alert(result.d);
+                },
+                error: function (result) {
+                    alert(result.d);
+                }
+            });
+        }
+    </script>
 
-****************************************************************************************** *@
-
+    @* Morris Donut Chart TICKETS BY PRIORITY *@
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
     <script>
-        // window.onload = function () {
-        // const ticketCount = document.getElementById('ticketCount');
 
-        $.ajax({
-            type: "POST",
-            url: "/Home/ProjectTicketCount",
-            data: '{}',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: onSuccess,
-            error: onError
-        });
-
-        function onSuccess(data) {
-            var chart = new CanvasJS.Chart("ticketCount", {
-                theme: "dark2", // "light1", "light2", "dark1"
-                animationEnabled: true,
-                exportEnabled: true,
-                height: 370,
-                axisX: {
-                    margin: 10,
-                    labelPlacement: "inside",
-                    tickPlacement: "inside"
-                },
-                axisY2: {
-                    // title: "Views (in billion)",
-                    titleFontSize: 14,
-                    includeZero: true,
-                    // suffix: "bn"
-                },
-                options: {
-                    responsive: false
-                },
-                data: [{
-                    type: "bar",
-                    axisYType: "secondary",
-                    yValueFormatString: "#",
-                    indexLabel: "{y}",
-                    dataPoints: data
-                }]
+        var morrisDonutData = [{
+            label: "Low",
+            value: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low)).Count()
+                                                                                                                        }, {
+            label: "Medium",
+            value: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Medium)).Count()
+                                                                                                                        }, {
+            label: "High",
+            value: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.High)).Count()
+                                                                                                                        }, {
+            label: "Urgent",
+            value: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Urgent)).Count()
+                                                                                                                    }];
+        if ($('#morrisTicketPriority').get(0)) {
+            var donutChart = Morris.Donut({
+                resize: true,
+                element: 'morrisTicketPriority',
+                data: morrisDonutData,
+                colors: ['#0088cc', '#734ba9', '#E36159', '#ff993b']
             });
 
-            chart.render();
-
-            $(".chart-btn").click(function () {
-                chart.render();
+            donutChart.options.data.forEach(function (label, i) {
+                var legendItem = $('<br><span></span>').text(label['label'] + ": " + label['value']).prepend('<span>&nbsp;</span>');
+                legendItem.find('span')
+                    .css('backgroundColor', donutChart.options.colors[i])
+                    .css('width', '20px')
+                    .css('display', 'inline-block')
+                    .css('margin', '10px');
+                $('#legend').append(legendItem)
             });
-        }
-        function onError(err) {
-            console.log(err);
-        }
+        };
     </script>
 
-
-
-    @*
-*************************************************************************************
-
-TICKET PRIORITY               canvas.js                              TICKET PRIORITY
-not working
-finish ajax
-****************************************************************************************** *@
-    <script>
-        var chart = new CanvasJS.Chart("ticketPriority", {
-            animationEnabled: true,
-            theme: "light2", // "light1", "light2", "dark1", "dark2",
-            toolTip: {
-                enabled: true,
-                animationEnabled: true,
-                shared: false
-            },
-            data: [{
-                type: "column",
-                yValueFormatString: "#",
-                dataPoints: [
-                    { label: "@nameof(BTTicketStatus.Development)", y: @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Development)).Count() },
-                    { label: "@nameof(BTTicketStatus.New)", y: @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.New)).Count()},
-                    { label: "@nameof(BTTicketStatus.Resolved)", y: @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count() },
-                    { label: "@nameof(BTTicketStatus.Testing)", y: @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Testing)).Count() },
-                ]
-            }]
-        });
-        chart.render();
-
-        $(".chart-btn").click(function () {
-            chart.render();
-        });
-    </script>
-
-    @*
-*************************************************************************************
-
-TICKET STATUS               canvas.js                              TICKET STATUS
-
-****************************************************************************************** *@
+    <!-- *** Begin Chart JS Pie/Donut TICKETS BY STATUS *** -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.0/dist/chart.min.js"></script>
     <script>
 
-        var donutChartCanvas = document.getElementById('ticketStatus').getContext('2d');
+        // var donutChartCanvas = $('#donutChart').get(0).getContext('2d');
+        var donutChartCanvas = document.getElementById('donutChart').getContext('2d');
         var donutData = {
             labels: [
                 '@nameof(BTTicketStatus.Development)',
@@ -505,7 +463,7 @@ TICKET STATUS               canvas.js                              TICKET STATUS
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.New)).Count(),
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count(),
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Testing)).Count()
-                                                                                                                                                                                    ],
+                                                                                                                    ],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
                         'rgba(54, 162, 235, 0.2)',
@@ -524,12 +482,12 @@ TICKET STATUS               canvas.js                              TICKET STATUS
 
         var donutOptions = {
             maintainAspectRatio: false,
-            responsive: true,
+            responsive: false,
             plugins: {
                 legend: {
                     position: 'right'
-                },
-                tooltip: { enabled: true }
+                }, 
+                tooltip: { enabled: false }
             },
         };
         //Create pie or douhnut chart
@@ -540,14 +498,9 @@ TICKET STATUS               canvas.js                              TICKET STATUS
             options: donutOptions
         });
     </script>
+    <!-- *** End Chart JS Donut *** -->
 
-
-    @*****
-*********************************************************************************
-
-TICKET V DEVELOPERS              amcharts                              TICKET V DEVELOPERS
-
-****************************************************************************************** *@
+      @* TICKE V DEVELOPERS *@
     <!-- *** Begin AM Charts *** -->
     <!-- Resources -->
     <script src="https://cdn.amcharts.com/lib/4/core.js"></script>
@@ -557,7 +510,7 @@ TICKET V DEVELOPERS              amcharts                              TICKET V 
     <script>
         $.ajax({
             type: "POST",
-            url: "/Home/TicketVDeveloper",
+            url: "/Home/AmCharts",
             data: '{}',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -568,8 +521,8 @@ TICKET V DEVELOPERS              amcharts                              TICKET V 
                     // Themes end
 
                     // Create chart instance
-                    var chart = am4core.create("ticketVDeveloper", am4charts.XYChart);
-                    chart.responsive.enabled = false;
+                    var chart = am4core.create("chartdiv", am4charts.XYChart);
+
 
                     // Add data
                     chart.data = result;
@@ -620,36 +573,10 @@ TICKET V DEVELOPERS              amcharts                              TICKET V 
                         categoryLabel.label.fill = am4core.color("#fff");
                         categoryLabel.label.hideOversized = false;
                         categoryLabel.label.truncate = false;
-
-                         // Set up tooltip
-                          series.adapter.add("tooltipText", function(text) {
-                            var text = "[bold]{dateX}[/]\n"
-                            chart.series.each(function(item) {
-                              if (!item.isHidden) {
-                                text += "[" + item.stroke.hex + "]●[/] " + item.name + ": {" + item.dataFields.valueY + "}\n";
-                              }
-                            });
-                            return text;
-                          });
-  
-                          series.tooltip.getFillFromObject = false;
-                          series.tooltip.background.fill = am4core.color("#fff");
-                          series.tooltip.label.fill = am4core.color("#00");
-  
-                          // Prevent cross-fading of tooltips
-                          series.tooltip.defaultState.transitionDuration = 0;
-                          series.tooltip.hiddenState.transitionDuration = 0;
-  
-                          // var bullet = series.bullets.push(new am4charts.CircleBullet());
-                          // bullet.circle.stroke = am4core.color("#fff");
-                          // bullet.circle.strokeWidth = 2;
-  
                     }
 
                     createSeries("tickets", "Tickets");
                     createSeries("developers", "Devs");
-                    
-                    chart.cursor.maxTooltipDistance = 0; 
 
                 }); // end am4core.ready()
 
@@ -663,4 +590,32 @@ TICKET V DEVELOPERS              amcharts                              TICKET V 
             }
         });
     </script>
+
+    <!-- *** End AM Charts *** -->
+    <!--  Plotly Charts  -->
+    <!-- Load plotly.js into the DOM -->
+    @* <script src='https://cdn.plot.ly/plotly-2.4.2.min.js'></script> *@
+    @* <script>
+    $.ajax({
+    type: "POST",
+    url: "/Home/PlotlyBarChart",
+    data: '{}',
+    contentType: "application/json; charset=utf-8",
+    dataType: "json",
+    success: function (result) {
+    var data = result;
+
+    var layout = { barmode: 'group' };
+
+    Plotly.newPlot('plotlyChart', data, layout);
+    },
+    failure: function (result) {
+    alert(result.d);
+    },
+    error: function (result) {
+    alert(result.d);
+    }
+    });
+    </script> *@
+
 }
