@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace TheBugTracker.Services.Interfaces
+namespace TheBugTracker.Services
 {
     public interface IImageService
     {

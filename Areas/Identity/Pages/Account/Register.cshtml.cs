@@ -17,7 +17,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using TheBugTracker.Data;
 using TheBugTracker.Models;
-using TheBugTracker.Services.Interfaces;
+using TheBugTracker.Services;
 
 namespace TheBugTracker.Areas.Identity.Pages.Account
 {
@@ -116,11 +116,11 @@ namespace TheBugTracker.Areas.Identity.Pages.Account
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     CompanyId = newCompanyId,
-//                    ImageData = (await _imageService.EncodeImageAsync(Input.ImageFile)) ??
-//            (await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"])),
-//                    ContentType = Input.ImageFile is null ?
-//Path.GetExtension(_configuration["DefaultUserImage"]) :
-//_imageService.ContentType(Input.ImageFile)
+                    AvatarFileData = (await _imageService.EncodeImageAsync(Input.ImageFile)) ??
+            (await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"])),
+                    AvatarFileContentType = Input.ImageFile is null ?
+Path.GetExtension(_configuration["DefaultUserImage"]) :
+_imageService.ContentType(Input.ImageFile)
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);

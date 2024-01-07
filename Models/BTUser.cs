@@ -14,12 +14,12 @@ namespace TheBugTracker.Models
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be betwen {2} and {1} characters.", MinimumLength = 2)]
         [Display(Name = "First Name")]
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = null!;
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be betwen {2} and {1} characters.", MinimumLength = 2)]
         [Display(Name = "Last Name")]
-        public string LastName { get; set; }
+        public string LastName { get; set; } = null!;
 
         [NotMapped]
         public string FullName { get { return $"{FirstName} {LastName}"; } }
@@ -32,7 +32,7 @@ namespace TheBugTracker.Models
         public IFormFile AvatarFormFile { get; set; }
 
         [DisplayName("Avatar")]
-        public string AvatarFileName { get; set; }
+        public string AvatarFileName { get; set; } = null!;
 
         public byte[] AvatarFileData { get; set; }
 

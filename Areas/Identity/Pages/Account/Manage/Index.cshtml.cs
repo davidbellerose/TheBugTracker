@@ -4,11 +4,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Configuration;
 using TheBugTracker.Models;
-using static System.Formats.Asn1.AsnWriter;
+using TheBugTracker.Services;
 
 namespace TheBugTracker.Areas.Identity.Pages.Account.Manage
 {
@@ -16,16 +18,23 @@ namespace TheBugTracker.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<BTUser> _userManager;
         private readonly SignInManager<BTUser> _signInManager;
+        private readonly IImageService _imageService;
+        private readonly IConfiguration _configuration;
 
         public IndexModel(
             UserManager<BTUser> userManager,
-            SignInManager<BTUser> signInManager)
+            SignInManager<BTUser> signInManager,
+            IImageService imageService,
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _imageService = imageService;
+            _configuration = configuration;
         }
 
         public string Username { get; set; }
+        public string CurrentImage { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -35,14 +44,17 @@ namespace TheBugTracker.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            [Display(Name = "Profile Image")]
+            public IFormFile ImageFile { get; set; }
 
             [Required]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; } = null!;
+
 
             [Required]
-            [Display(Name = "Last Name")]
-            public string LastName { get; set; }
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; } = null!;
 
             [Phone]
             [Display(Name = "Phone number")]
@@ -58,6 +70,7 @@ namespace TheBugTracker.Areas.Identity.Pages.Account.Manage
             var lastName = user.LastName;
 
             Username = userName;
+            CurrentImage = _imageService.DecodeImage(user.AvatarFileData, user.AvatarFileContentType);
 
             Input = new InputModel
             {
@@ -93,19 +106,15 @@ namespace TheBugTracker.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
+
             if (user.FirstName != Input.FirstName || user.LastName != Input.LastName)
             {
                 user.FirstName = Input.FirstName;
                 user.LastName = Input.LastName;
             }
-            //await _userManager.UpdateUserAsync(user);
+
+
             await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-            //user.FirstName = Input.FirstName;
-            //user.LastName = Input.LastName;
-
-            //var firstName = user.FirstName;
-            //var lastName = user.LastName;
-
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -116,6 +125,15 @@ namespace TheBugTracker.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            if (Input.ImageFile != null)
+            {
+                user.AvatarFileData = await _imageService.EncodeImageAsync(Input.ImageFile);
+                user.AvatarFileContentType = _imageService.ContentType(Input.ImageFile);
+                await _userManager.UpdateAsync(user);
+            }
+
+
             await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

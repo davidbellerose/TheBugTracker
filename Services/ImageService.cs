@@ -2,7 +2,6 @@
 using System.IO;
 using System;
 using System.Threading.Tasks;
-using TheBugTracker.Services.Interfaces;
 
 namespace TheBugTracker.Services
 {
