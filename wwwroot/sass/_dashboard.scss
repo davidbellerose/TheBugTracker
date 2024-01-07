@@ -13,3 +13,418 @@
 .pill-counts {
     background-color: $dark-color;
 }
+
+
+#insights, #stats, #projectsIcon, #ticketsIcon {
+    display: block;
+    margin: 2.5rem 0 1rem 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+#insights img, #stats img, #projectsIcon img, #ticketsIcon img {
+    width: 30px;
+    height: auto;
+    margin-right: 0.8rem;
+}
+
+
+
+.dashboard-project-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .responsive-table {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+
+        ul {
+            padding: 0 !important;
+        }
+
+        li {
+            border-radius: 3px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .table-header {
+            /*background-color: #95a5a6;*/
+            font-size: 14px;
+            color: $dark-color;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 25px 30px 0 30px;
+            margin: 0 0 1rem 0;
+        }
+
+        .table-row {
+            background-color: #ffffff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            border-radius: 7px;
+        }
+
+        .col-1 {
+            flex-basis: 55%;
+        }
+
+        .col-2 {
+            flex-basis: 15%;
+        }
+
+        .col-3 {
+            flex-basis: 15%;
+        }
+
+        .col-4 {
+            flex-basis: 10%;
+        }
+
+        .col-5 {
+            flex-basis: 5%;
+        }
+
+        .col-5 i, .col-5 a {
+            display: flex;
+            align-items: start;
+            justify-content: center;
+            text-decoration: none;
+            color: $light-color;
+            font-size: 2rem;
+            padding: 0;
+            margin: 0;
+        }
+
+        .col-5 i:hover {
+            color: $bright-color;
+        }
+
+        @media all and (max-width: 767px) {
+            .table-header {
+                display: none;
+            }
+
+            .table-row {
+            }
+
+            li {
+                display: block;
+            }
+
+            .col {
+                flex-basis: 100%;
+            }
+
+            .col {
+                padding: 10px 0;
+                display: flex;
+                width: 100%;
+
+                &::before {
+                    color: #6c7a89;
+                    padding-right: 10px;
+                    content: attr(data-label);
+                    flex-basis: 50%;
+                    text-align: left;
+                }
+            }
+        }
+
+        @media all and (max-width: 500px) {
+            .table-row {
+                /*         background-color: lightgray; */
+            }
+
+            .col {
+                display: block;
+            }
+
+            .col::before {
+                display: block;
+            }
+        }
+    }
+}
+
+
+.dashboard-ticket-container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+
+    .responsive-table {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+
+        ul {
+            padding: 0 !important;
+        }
+
+        li {
+            border-radius: 3px;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .table-header {
+            /*background-color: #95a5a6;*/
+            font-size: 14px;
+            color: $dark-color;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            padding: 25px 30px 0 30px;
+            margin: 0 0 1rem 0;
+        }
+
+        .table-row {
+            background-color: #ffffff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            border-radius: 7px;
+        }
+
+        .col-1 {
+            flex-basis: 35%;
+        }
+
+        .col-2 {
+            flex-basis: 15%;
+        }
+
+        .col-3 {
+            flex-basis: 20%;
+        }
+
+        .col-4 {
+            flex-basis: 10%;
+        }
+
+        .col-5 {
+            flex-basis: 15%;
+        }
+
+        .col-6 {
+            flex-basis: 5%;
+        }
+
+        .col-6 i, .col-6 a {
+            display: flex;
+            align-items: start;
+            justify-content: center;
+            text-decoration: none;
+            color: $light-color;
+            font-size: 2rem;
+            padding: 0;
+            margin: 0;
+        }
+
+        .col-6 i:hover {
+            color: $bright-color;
+        }
+
+        @media all and (max-width: 767px) {
+            .table-header {
+                display: none;
+            }
+
+            .table-row {
+            }
+
+            li {
+                display: block;
+            }
+
+            .col {
+                flex-basis: 100%;
+            }
+
+            .col {
+                padding: 10px 0;
+                display: flex;
+                width: 100%;
+
+                &::before {
+                    color: #6c7a89;
+                    padding-right: 10px;
+                    content: attr(data-label);
+                    flex-basis: 50%;
+                    text-align: left;
+                }
+            }
+        }
+
+        @media all and (max-width: 500px) {
+            .table-row {
+                /*         background-color: lightgray; */
+            }
+
+            .col {
+                display: block;
+            }
+
+            .col::before {
+                display: block;
+            }
+        }
+    }
+}
+
+
+
+.badge-low, .badge-medium, .badge-high, .badge-urgent,
+.badge-new, .badge-development, .badge-testing, .badge-resolved {
+    padding: 0px 7px 3px 7px;
+    border-radius: 10px;
+    color: #fff;
+}
+
+.badge-low {
+    background-color: green;
+}
+
+.badge-medium {
+    background-color: darkorange;
+}
+
+.badge-high {
+    background-color: red;
+}
+
+.badge-urgent {
+    background-color: fuchsia;
+}
+
+.badge-new {
+    background-color: rgba(138, 218, 178, 0.9);
+}
+
+.badge-development {
+    background-color: rgba(56, 135, 190, 0.9);
+}
+
+.badge-testing {
+    background-color: rgba(56, 65, 157, 0.9);
+}
+
+.badge-resolved {
+    background-color: rgba(32, 14, 58, 0.9);
+}
+
+//MEMBER CARDS
+
+.members-container {
+
+    .h1,
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .container-fluid {
+        max-width: 1400px;
+    }
+
+    .card {
+        background: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+        border: 1;
+        border-radius: 0.5rem;
+        margin: 0;
+        padding: 0;
+        max-width: 450px;
+    }
+
+    .card-body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .img img {
+        border-radius: 50%;
+        width: 100%;
+        max-width: 100px;
+        height: auto;
+        /* margin-top: 20px; */
+        padding: 1px;
+        /* transition: transform .5s; */
+        /*     filter: grayscale(100%); */
+    }
+
+    .img-hover-zoom--colorize:hover img {
+        /*     filter: grayscale(0);
+    transform: scale(1.05); */
+    }
+
+    .card h5 {
+        overflow: hidden;
+        /* height: 80px; */
+        font-weight: 300;
+        font-size: 1rem;
+    }
+
+    .card h5 a {
+        color: black;
+        text-decoration: none;
+    }
+
+    .role {
+        color: #7a7a7a;
+    }
+
+    .box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /*   flex-basis: 20%; */
+    }
+
+    .bi {
+        font-size: 1.5rem;
+        color: darkgray;
+        transition: transform .5s;
+        /*   border: 1px solid blue; */
+    }
+
+    .bi:hover {
+        color: black;
+        transform: scale(1.1);
+    }
+
+    .card h2 {
+        font-size: 1rem;
+    }
+    /* MEDIA */
+
+
+    @media only screen and (min-width: 1200px) {
+
+        .h1,
+        h1 {
+            font-size: 2rem;
+        }
+    }
+
+    @media only screen and (min-width: 420px) and (max-width: 576px) {
+
+        .h1,
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        .img {
+            margin-top: 1rem;
+        }
+
+        .card {
+            width: 80%;
+        }
+    }
+}

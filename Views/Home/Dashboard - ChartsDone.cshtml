@@ -19,7 +19,7 @@
     <div class="container-fluid">
         <!-- Info Pills -->
         <span id="stats"><img src="~/image/bar-chart-line.svg" />Stats</span>
-        <div class="row">
+        <div class="row mt-2 mb-5">
             <div class="col-lg-3 col-md-6 col-sm-6 pb-2">
                 <a asp-action="AllProjects" asp-controller="Projects" style="text-decoration:none">
                     <div class="card text-center pill-projects">
@@ -174,203 +174,150 @@
         </div>
         @* END TABBED CHARTS *@
     </div>
-
-    @* *********************************************************************
-
-    PROJECT CARDS
-
-    ***************************************************************************@
-    <span id="projectsIcon"><i class="bi-file-earmark-ppt"></i> Recent Projects</span>
-
-    <div class="dashboard-project-container">
-        <ul class="responsive-table">
-            <li class="table-header">
-                <div class="col col-1">Name</div>
-                <div class="col col-2">Start Date</div>
-                <div class="col col-3">End Date</div>
-                <div class="col col-4">Priority</div>
-                <div class="col col-4"></div>
-            </li>
-            @foreach (var project in Model.Projects.Take(8).OrderByDescending(d => d.StartDate))
-            {
-                <li class="table-row">
-                    <div class="col col-1" data-label="Project">
-                        <a asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id" style="color:black">
-                            <strong>@project.Name</strong>
-                        </a>
-                    </div>
-                    <div class="col col-2" data-label="Start Date">@project.StartDate.ToString("MM/dd/yyyy")</div>
-                    <div class="col col-3" data-label="End Date">@project.EndDate.ToString("MM/dd/yyyy")</div>
-                    @if (project.ProjectPriority.Name == "Low")
-                    {
-                        <div class="col col-4" data-label="Priority Status"><span class="badge-low">@project.ProjectPriority?.Name</span></div>
-                    }
-                    else if (project.ProjectPriority.Name == "Medium")
-                    {
-                        <div class="col col-4" data-label="Priority Status"><span class="badge-medium">@project.ProjectPriority?.Name</span></div>
-
-                    }
-                    else if (project.ProjectPriority.Name == "High")
-                    {
-                        <div class="col col-4" data-label="Priority Status"><span class="badge-high">@project.ProjectPriority?.Name</span></div>
-
-                    }
-                    else if (project.ProjectPriority.Name == "Urgent")
-                    {
-                        <div class="col col-4" data-label="Priority Status"><span class="badge-urgent">@project.ProjectPriority?.Name</span></div>
-                    }
-                    <div class="col col-5" data-label="">
-                        <a class="" asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id">
-                            <i class="bi bi-eye-fill"></i>
-                        </a>
-                    </div>
-                </li>
-            }
-        </ul>
-    </div>
-    @* END PROJECTS *@
     <div class="mt-5">
         <div class="row">
+            @* Projects Table *@
+            <div class="col">
+                <div class="bg-secondary">
+                    <div class="card m-1 p-2">
+                        <div class="card-header">
+                            <h2>Projects</h2>
+                        </div>
+                        <div class="card-body">
 
-            @* *********************************************************************
-
-            TICKET CARDS
-
-            ***************************************************************************@
-            <span id="ticketsIcon"><i class="bi-file-earmark-font"></i> Recent Tickets</span>
-
-            <div class="dashboard-ticket-container">
-                <ul class="responsive-table">
-                    <li class="table-header">
-                        <div class="col col-1">Title</div>
-                        <div class="col col-2">Developer</div>
-                        <div class="col col-3">Status</div>
-                        <div class="col col-4">Priority</div>
-                        <div class="col col-4">Date</div>
-                        <div class="col col-4"></div>
-                    </li>
-                    @foreach (var ticket in Model.Tickets.Take(10).OrderByDescending(d => d.Created))
-                    {
-                        <li class="table-row">
-                            <div class="col col-1" data-label="Ticket">
-                                <a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style="color:black"><strong>@ticket.Title</strong></a>
+                            <div class="table-responsive" style="overflow-y:auto;height:600px;">
+                                <table class="table table-hover">
+                                    <thead class="">
+                                        <tr>
+                                            @* Table header *@
+                                            <th>Name</th>
+                                            <th>Start Date</th>
+                                            <th>End Date</th>
+                                            <th>Priority</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @* Table body *@
+                                        @foreach (var project in Model.Projects.OrderByDescending(d => d.EndDate))
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <a asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id" style="color:black">
+                                                        <strong>@project.Name</strong>
+                                                    </a>
+                                                </td>
+                                                <td><span style="font-size:small">@project.StartDate.ToString("MM.dd.yyyy")</span></td>
+                                                <td><span style="font-size:small">@project.EndDate.ToString("MM.dd.yyyy")</span></td>
+                                                <td><span class="bg-dark">@project.ProjectPriority?.Name</span></td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id">
+                                                        <i class="offset-5 bi-justify"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col col-2" data-label="Developer">
-                                @if (ticket.DeveloperUserId != null)
-                                {
-                                    @ticket.DeveloperUser?.FullName
-                                }
-                                else
-                                {
-                                    <span class="badge bg-warnging text-dark">Unassigned</span>
-                                }
-                            </div>
-                            @* TICKET STATUS *@
-                            @if (ticket.TicketStatus.Name == "New")
-                            {
-                                <div class="col col-3" data-label="Ticket Status"><span class="badge-new">@ticket.TicketStatus.Name</span></div>
-                            }
-                            else if (ticket.TicketStatus.Name == "Development")
-                            {
-                                <div class="col col-3" data-label="Ticket Status"><span class="badge-development">@ticket.TicketStatus.Name</span></div>
 
-                            }
-                            else if (ticket.TicketStatus.Name == "Testing")
-                            {
-                                <div class="col col-3" data-label="Ticket Status"><span class="badge-testing">@ticket.TicketStatus.Name</span></div>
-
-                            }
-                            else if (ticket.TicketStatus.Name == "Resolved")
-                            {
-                                <div class="col col-3" data-label="Ticket Status"><span class="badge-resolved">@ticket.TicketStatus.Name</span></div>
-                            }
-                            @* TICKET PRIORITY *@
-                            @if (@ticket.TicketPriority.Name == "Low")
-                            {
-                                <div class="col col-4" data-label="Ticket Status"><span class="badge-low">@ticket.TicketPriority.Name</span></div>
-                            }
-                            else if (@ticket.TicketPriority.Name == "Medium")
-                            {
-                                <div class="col col-4" data-label="Ticket Status"><span class="badge-medium">@ticket.TicketPriority.Name</span></div>
-
-                            }
-                            else if (@ticket.TicketPriority.Name == "High")
-                            {
-                                <div class="col col-4" data-label="Ticket Status"><span class="badge-high">@ticket.TicketPriority.Name</span></div>
-
-                            }
-                            else if (@ticket.TicketPriority.Name == "Urgent")
-                            {
-                                <div class="col col-4" data-label="Ticket Status"><span class="badge-urgent">@ticket.TicketPriority.Name</span></div>
-                            }
-                            <div class="col col-5" data-label="Date">@ticket.Created.ToString("MM/dd/yyyy")</div>
-                            <div class="col col-6" data-label="">
-                                <a class="" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id">
-                                    <i class="bi bi-eye-fill"></i>
-                                </a>
-                            </div>
-                        </li>
-                    }
-                </ul>
-            </div>
-            @* END TICKETS *@
-        </div>
-        @* *********************************************************************
-
-        MEMBER CARDS
-
-        ***************************************************************************@
-        <span id="ticketsIcon"><img src="~/image/person-rolodex.svg" />Members</span>
-
-        <div class="members-container p-5">
-            <div class="row row-cols-1 row-cols-md-2 gy-3">
-
-                <!--       start card -->
-                @foreach (BTUser members in Model.Members)
-                {
-                    <div class="col">
-                        <div class="card h-100">
-                            <div class="row">
-                                <div class="col-sm-4 d-flex justify-content-center align-items-center">
-                                    <!-- <div class=""> -->
-                                    <div class="img">
-                                        <img class="shadow" src="https://source.unsplash.com/rDEOVtE7vOs/600x600"
-                                             alt="Another Image zoom-on-hover effect">
-                                    </div>
-                                    <!-- </div> -->
-                                </div>
-                                <div class="col-sm-8">
-                                    <div class="card-body">
-                                        <div class="clearfix mb-3">
-                                        </div>
-                                        <div class="my-2 text-center">
-                                            <h1>@members.FullName</h1>
-                                        </div>
-                                        <div class="mb-3">
-                                            <h2 class="text-uppercase text-center role">@((await RolesService.GetUserRolesAsync(members)).FirstOrDefault())</h2>
-                                        </div>
-                                        @*                                     <div class="box">
-                                    <div>
-                                    <ul class="list-inline">
-                                    <li class="list-inline-item"><i class="bi bi-github"></i></li>
-                                    <li class="list-inline-item"><i class="bi bi-linkedin"></i></li>
-                                    <li class="list-inline-item"><i class="bi bi-instagram"></i></li>
-                                    <li class="list-inline-item"><i class="bi bi-twitter"></i></li>
-                                    </ul>
-                                    </div>
-                                    </div> *@
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
+                        <div class="card-footer">
                         </div>
                     </div>
-                    <!--           end card -->
-                }
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-secondary">
+                    <div class="card m-1 p-2">
+                        <div class="card-header">
+                            <h2>Tickets</h2>
+
+                        </div>
+                        <div class="card-body">
+
+
+                            <div class="table-responsive" style="overflow-y:auto;height:600px;">
+                                <table class="table table-hover">
+                                    <thead class="">
+                                        <tr>
+                                            <th>Title</th>
+                                            <th>Developer</th>
+                                            <th>Status</th>
+                                            <th>Priority</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var ticket in Model.Tickets.OrderByDescending(d => d.Created))
+                                        {
+                                            <tr>
+                                                <td><a asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id" style="color:black"><strong>@ticket.Title</strong></a> </td>
+                                                <td>
+                                                    @if (ticket.DeveloperUserId != null)
+                                                    {
+                                                        @ticket.DeveloperUser?.FullName
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge bg-warnging text-dark">Unassigned</span>
+                                                    }
+                                                </td>
+                                                @if (ticket.TicketStatus.Name == "New")
+                                                {
+                                                    <td><span class="badge bg-success rounded-pill">@ticket.TicketStatus.Name </span></td>
+
+                                                }
+                                                else
+                                                {
+                                                    <td><span class="badge bg-secondary rounded-pill">@ticket.TicketStatus.Name </span></td>
+                                                }
+                                                <td><span class="badge bg-dark">@ticket.TicketPriority.Name </span></td>
+                                                <td><span style="font-size:small">@ticket.Created.ToString("MM.dd.yyyy")</span></td>
+                                                <td>
+                                                    <a class="btn btn-sm btn-outline-secondary" asp-action="Details" asp-controller="Tickets" asp-route-id="@ticket.Id"><i class="fs-5 bi-justify"></i></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        @* ---------------- *@
+        <div class="row">
+            <div class="col">
+                <div class="bg-dark">
+                    <div class="card m-1 p-2">
+                        <div class="card-header">
+                            <h2>Members</h2>
+                            <hr />
+                        </div>
+                        <div class="card-body" style="overflow-y:auto;height:600px;background-color:antiquewhite">
+
+                            @foreach (BTUser members in Model.Members)
+                            {
+                                <div class="">
+                                    <span style="font-weight:bold">@members.FullName</span>
+                                    <h6>@((await RolesService.GetUserRolesAsync(members)).FirstOrDefault())</h6>
+                                </div>
+                                <hr />
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-    @* END MEMBERS *@
 </div>
 
 
@@ -397,18 +344,9 @@ PROJECT PRIORITY               chart.js                              PROJECT PRI
             });
 
             function onSuccess(data) {
-                CanvasJS.addColorSet("colors",
-                    [//colorSet Array
-
-                        "#008000",
-                        "#ff8c00",
-                        "#ff0000",
-                        "#ff00ff"
-                    ]);
 
                 var chart = new CanvasJS.Chart("projectPriority", {
                     theme: "light2", // "light1", "light2", "dark1", "dark2"
-                    colorSet: "colors",
                     exportEnabled: true,
                     legend: {
                         verticalAlign: "center",
@@ -517,19 +455,9 @@ not working
 finish ajax
 ****************************************************************************************** *@
     <script>
-
-        CanvasJS.addColorSet("colors",
-            [//colorSet Array
-
-                "#008000",
-                "#ff8c00",
-                "#ff0000",
-                "#ff00ff"
-            ]);
         var chart = new CanvasJS.Chart("ticketPriority", {
             animationEnabled: true,
             theme: "light2", // "light1", "light2", "dark1", "dark2",
-            colorSet: "colors",
             toolTip: {
                 enabled: true,
                 animationEnabled: true,
@@ -565,30 +493,30 @@ TICKET STATUS               canvas.js                              TICKET STATUS
         var donutChartCanvas = document.getElementById('ticketStatus').getContext('2d');
         var donutData = {
             labels: [
-                '@nameof(BTTicketStatus.New)',
                 '@nameof(BTTicketStatus.Development)',
-                '@nameof(BTTicketStatus.Testing)',
-                '@nameof(BTTicketStatus.Resolved)'
+                '@nameof(BTTicketStatus.New)',
+                '@nameof(BTTicketStatus.Resolved)',
+                '@nameof(BTTicketStatus.Testing)'
             ],
             datasets: [
                 {
                     data: [
-        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.New)).Count(),
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Development)).Count(),
-        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Testing)).Count(),
-        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count()
-                                                                                                                                                                                                                                            ],
+        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.New)).Count(),
+        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count(),
+        @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Testing)).Count()
+                                                                                                                                                                                    ],
                     backgroundColor: [
-                        'rgba(138, 218, 178, 0.9)',
-                        'rgba(56, 135, 190, 0.9)',
-                        'rgba(56, 65, 157, 0.9)',
-                        'rgba(32, 14, 58, 0.9)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
                     ],
                     borderColor: [
-                        'rgba(138, 218, 178, 1)',
-                        'rgba(56, 135, 190, 1)',
-                        'rgba(56, 65, 157, 1)',
-                        'rgba(32, 14, 58, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)'
                     ]
                 }
             ]
@@ -693,35 +621,35 @@ TICKET V DEVELOPERS              amcharts                              TICKET V 
                         categoryLabel.label.hideOversized = false;
                         categoryLabel.label.truncate = false;
 
-                        // Set up tooltip
-                        series.adapter.add("tooltipText", function (text) {
+                         // Set up tooltip
+                          series.adapter.add("tooltipText", function(text) {
                             var text = "[bold]{dateX}[/]\n"
-                            chart.series.each(function (item) {
-                                if (!item.isHidden) {
-                                    text += "[" + item.stroke.hex + "]●[/] " + item.name + ": {" + item.dataFields.valueY + "}\n";
-                                }
+                            chart.series.each(function(item) {
+                              if (!item.isHidden) {
+                                text += "[" + item.stroke.hex + "]●[/] " + item.name + ": {" + item.dataFields.valueY + "}\n";
+                              }
                             });
                             return text;
-                        });
-
-                        series.tooltip.getFillFromObject = false;
-                        series.tooltip.background.fill = am4core.color("#fff");
-                        series.tooltip.label.fill = am4core.color("#00");
-
-                        // Prevent cross-fading of tooltips
-                        series.tooltip.defaultState.transitionDuration = 0;
-                        series.tooltip.hiddenState.transitionDuration = 0;
-
-                        // var bullet = series.bullets.push(new am4charts.CircleBullet());
-                        // bullet.circle.stroke = am4core.color("#fff");
-                        // bullet.circle.strokeWidth = 2;
-
+                          });
+  
+                          series.tooltip.getFillFromObject = false;
+                          series.tooltip.background.fill = am4core.color("#fff");
+                          series.tooltip.label.fill = am4core.color("#00");
+  
+                          // Prevent cross-fading of tooltips
+                          series.tooltip.defaultState.transitionDuration = 0;
+                          series.tooltip.hiddenState.transitionDuration = 0;
+  
+                          // var bullet = series.bullets.push(new am4charts.CircleBullet());
+                          // bullet.circle.stroke = am4core.color("#fff");
+                          // bullet.circle.strokeWidth = 2;
+  
                     }
 
                     createSeries("tickets", "Tickets");
                     createSeries("developers", "Devs");
-
-                    chart.cursor.maxTooltipDistance = 0;
+                    
+                    chart.cursor.maxTooltipDistance = 0; 
 
                 }); // end am4core.ready()
 

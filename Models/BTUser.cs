@@ -27,6 +27,7 @@ namespace TheBugTracker.Models
 
 
         [NotMapped]
+        [Display(Name = "Profile Image")]
         [DataType(DataType.Upload)]
         public IFormFile AvatarFormFile { get; set; }
 

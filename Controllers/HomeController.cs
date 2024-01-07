@@ -169,10 +169,7 @@ namespace TheBugTracker.Controllers
         {
             int companyId = User.Identity.GetCompanyId().Value;
 
-            // need list of tickets by company
-            // need ticket name and ticket count
-            //.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low)).Count()
-            //List<Ticket> tickets = await _ticketService.GetAllTicketsByCompanyAsync(companyId);
+            // DON'T NEED THIS, data is taken directly from the model in the view
 
             List<string> priorities = new List<string>();
             var low = _applicationDbContext.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low)).ToString();
