@@ -36,3 +36,58 @@ a:hover,
 a:focus {
     text-decoration: none;
 }
+
+.btn-actions {
+    color: #fff;
+    background-color: $bright-color;
+}
+
+.btn-actions:hover,
+.btn-actions:focus,
+.btn-actions:active {
+    color: #fff;
+    background-color: $light-color;
+}
+
+/*Identity pages*/
+.manage-nav {
+    li{
+        margin-bottom: 0.5rem;
+    }
+
+    li a {
+        color: $light-color;
+    }
+
+    .active {
+        background-color: $bright-color !important;
+        color: #fff;
+    }
+
+    li a:hover,
+    li a:focus {
+        background-color: $bright-color;
+        color: #fff;
+    }
+}
+
+#profile-form, #email-form, #set-password-form, #change-password-form {
+    .form-group {
+        margin-bottom: 1rem;
+    }
+}
+
+.demo-logins {
+    background-color: $ham-color;
+    border-radius: 7px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    form {
+        width: 100%;
+        margin-bottom: 1rem;
+    }
+}

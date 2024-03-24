@@ -15,7 +15,7 @@
     <!-- Option 1: Include in HTML -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
     <!-- HEADER -->
@@ -67,10 +67,10 @@
                                     <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Projects" asp-action="MyProjects"><span>&#10609</span>My Projects</a></li>
                                 }
                                 <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Projects" asp-action="AllProjects"><span>&#10609</span>All Projects</a></li>
-                                <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects"><span>&#10609</span>Archived Projects</a></li>
+                                <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Projects" asp-action="ArchivedProjects"><span>&#10609</span>Archived</a></li>
                                 @if (User.IsInRole(nameof(Roles.Administrator)))
                                 {
-                                    <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Projects" asp-action="UnassignedProjects"><span>&#10609</span>Unassigned Projects</a></li>
+                                    <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Projects" asp-action="UnassignedProjects"><span>&#10609</span>Unassigned</a></li>
                                 }
                             </ul>
                         </li>
@@ -87,10 +87,10 @@
                                     <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Tickets" asp-action="MyTickets"><span>&#10609</span>My Tickets</a></li>
                                 }
                                 <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Tickets" asp-action="AllTickets"><span>&#10609</span>All Tickets</a></li>
-                                <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets"><span>&#10609</span>Archived Tickets</a></li>
+                                <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Tickets" asp-action="ArchivedTickets"><span>&#10609</span>Archived</a></li>
                                 @if (User.IsInRole(nameof(Roles.Administrator)) || User.IsInRole(nameof(Roles.ProjectManager)))
                                 {
-                                    <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Tickets" asp-action="UnassignedTickets"><span>&#10609</span>Unassigned Tickets</a></li>
+                                    <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Tickets" asp-action="UnassignedTickets"><span>&#10609</span>Unassigned</a></li>
                                 }
                             </ul>
                         </li>
@@ -148,6 +148,6 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+                            @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

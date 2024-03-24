@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
+#nullable disable
+
 namespace TheBugTracker.Migrations
 {
     public partial class init : Migration
@@ -170,14 +172,12 @@ namespace TheBugTracker.Migrations
                         name: "FK_Projects_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Projects_ProjectPriorities_ProjectPriorityId",
                         column: x => x.ProjectPriorityId,
                         principalTable: "ProjectPriorities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -314,20 +314,17 @@ namespace TheBugTracker.Migrations
                         name: "FK_Invites_AspNetUsers_InviteeId",
                         column: x => x.InviteeId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Invites_AspNetUsers_InvitorId",
                         column: x => x.InvitorId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Invites_Companies_Companyid",
                         column: x => x.Companyid,
                         principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Invites_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -362,14 +359,12 @@ namespace TheBugTracker.Migrations
                         name: "FK_Tickets_AspNetUsers_DeveloperUserId",
                         column: x => x.DeveloperUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tickets_AspNetUsers_OwnerUserId",
                         column: x => x.OwnerUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tickets_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -417,14 +412,12 @@ namespace TheBugTracker.Migrations
                         name: "FK_Notifications_AspNetUsers_RecipientId",
                         column: x => x.RecipientId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Notifications_AspNetUsers_SenderId",
                         column: x => x.SenderId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Notifications_Tickets_TicketId",
                         column: x => x.TicketId,
@@ -454,8 +447,7 @@ namespace TheBugTracker.Migrations
                         name: "FK_TicketAttachments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TicketAttachments_Tickets_TicketId",
                         column: x => x.TicketId,
@@ -482,8 +474,7 @@ namespace TheBugTracker.Migrations
                         name: "FK_TicketComments_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TicketComments_Tickets_TicketId",
                         column: x => x.TicketId,
@@ -513,8 +504,7 @@ namespace TheBugTracker.Migrations
                         name: "FK_TicketHistories_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_TicketHistories_Tickets_TicketId",
                         column: x => x.TicketId,

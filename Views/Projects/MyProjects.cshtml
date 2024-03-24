@@ -6,109 +6,55 @@
     ViewData["Title"] = "My Projects";
 }
 
-<h1>Index</h1>
+<h1>My Projects</h1>
 
 
-<table class="table-responsive">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Company.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.StartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EndDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FileName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FileData)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FileContentType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Archived)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProjectPriority)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+<div class="projects-container">
+    <ul class="responsive-table">
+        <li class="table-header">
+            <div class="col col-1">Name</div>
+            <div class="col col-2">Description</div>
+            <div class="col col-3">Start Date</div>
+            <div class="col col-4">End Date</div>
+            <div class="col col-5">Priority</div>
+            <div class="col col-6"></div>
+        </li>
+        @foreach (var project in Model.OrderByDescending(d => d.StartDate))
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Company.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EndDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FileName)
-                </td>
-                <td>
-                    @if (item.FileData != null)
-                    {
-                        <img id="imageFileData" class="img-fluid img-thumbnail" style="width:60px;height:60px;" src="data:image/*;base64,@(Convert.ToBase64String(item.FileData))" />
-                    }
-                    else
-                    {
-                        <img id="imageFileData" class="img-fluid img-thumbnail" style="width:60px;height:60px;" src="~/image/defaultUserImage.png" />
-                    }
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FileContentType)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Archived)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Company.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProjectPriority.Name)
-                </td>
-                <td>
+            <li class="table-row">
+                <div class="col col-1" data-label="Project">
+                    <a asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id" style="color:black">
+                        <strong>@project.Name</strong>
+                    </a>
+                </div>
+                <div class="col col-2" data-label="Description">@project.Description</div>
+                <div class="col col-3" data-label="Start Date">@project.StartDate.ToString("MM/dd/yyyy")</div>
+                <div class="col col-4" data-label="End Date">@project.EndDate.ToString("MM/dd/yyyy")</div>
+                @if (project.ProjectPriority.Name == "Low")
+                {
+                    <div class="col col-5" data-label="Priority Status"><span class="badge-low">@project.ProjectPriority?.Name</span></div>
+                }
+                else if (project.ProjectPriority.Name == "Medium")
+                {
+                    <div class="col col-5" data-label="Priority Status"><span class="badge-medium">@project.ProjectPriority?.Name</span></div>
 
-                    @if (User.IsInRole(nameof(Roles.Administrator)) || User.IsInRole(nameof(Roles.ProjectManager)))
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        @if (item.Archived)
-                        {
-                            <a asp-action="Restore" asp-route-id="@item.Id">Restore</a>
-                        }
-                        else
-                        {
-                            <a asp-action="Archive" asp-route-id="@item.Id">Archive</a>
-                        }
-                    }
-                </td>
-            </tr>
+                }
+                else if (project.ProjectPriority.Name == "High")
+                {
+                    <div class="col col-5" data-label="Priority Status"><span class="badge-high">@project.ProjectPriority?.Name</span></div>
+
+                }
+                else if (project.ProjectPriority.Name == "Urgent")
+                {
+                    <div class="col col-5" data-label="Priority Status"><span class="badge-urgent">@project.ProjectPriority?.Name</span></div>
+                }
+                <div class="col col-6" data-label="">
+                    <a class="" asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id">
+                        <i class="bi bi-eye-fill"></i>
+                    </a>
+                </div>
+            </li>
         }
-    </tbody>
-</table>
+    </ul>
+</div>
+

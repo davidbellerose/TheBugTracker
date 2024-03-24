@@ -227,9 +227,6 @@ namespace TheBugTracker.Controllers
             ViewData["TicketTypeId"] = new SelectList(await _lookupService.GetTicketTypesAsync(), "Id", "Name");
 
             ViewData["id"] = projectId;
-            
-
-
 
             return View();
         }

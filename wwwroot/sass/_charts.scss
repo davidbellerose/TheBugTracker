@@ -32,13 +32,13 @@
 }
 
 .nav-tabs .nav-item button:hover {
-    color: $bright-color;
+    color: $light-color;
     border: 1px solid $dark-color;
     border-bottom: 0;
 }
 
 .nav-tabs li button.active {
-    background-color: $light-color !important;
+    background-color: $bright-color !important;
     color: #fff !important;
 }
 

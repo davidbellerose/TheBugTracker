@@ -4,84 +4,64 @@
     ViewData["Title"] = "Restore";
 }
 
-<h1>Restore</h1>
+<div class="crud-container">
+    <h2>Restore Ticket</h2>
 
-<h3>Are you sure you want to Restore this?</h3>
-<div>
-    <h4>Ticket</h4>
+    <h3>Are you sure you want to Restore this Ticket?</h3>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Project)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Project.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Created)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Created)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Updated)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Updated)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Archived)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Archived)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TicketType)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TicketType.Name)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TicketPriority)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TicketPriority.Name)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TicketStatus)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TicketStatus.Name)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OwnerUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OwnerUser.FullName)
-        </dd class>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DeveloperUser)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DeveloperUser.FullName)
-        </dd class>
-    </dl>
-    
-    <form asp-action="Restore">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Restore" class="btn btn-success" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+    <div class="row">
+        <div class="col-lg-10 offset-lg-1">
+            <div class="form-group">
+                <label asp-for="Project.Name" class="control-label"></label>
+                <input asp-for="Project.Name" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Ticket Title</label>
+                <input asp-for="Title" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3" disabled></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="Created" class="control-label"></label>
+                <input asp-for="Created" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Updated" class="control-label"></label>
+                <input asp-for="Updated" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <input type="checkbox" asp-for="Archived" class="form-check-input" disabled />
+                <label asp-for="Archived" class="control-label"></label>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketTypeId" class="control-label"></label>
+                <input asp-for="TicketType.Name" class="form-control" asp-items="ViewBag.TicketTypeId" disabled></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketPriorityId" class="control-label"></label>
+                <input asp-for="TicketPriority.Name" class="form-control" asp-items="ViewBag.TicketPriorityId" disabled></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="TicketStatusId" class="control-label"></label>
+                <input asp-for="TicketStatus.Name" class="form-control" asp-items="ViewBag.TicketStatusId" disabled></input>
+            </div>
+            <div class="form-group">
+                <label asp-for="OwnerUserId" class="control-label"></label>
+                <input asp-for="OwnerUser.FullName" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="DeveloperUserId" class="control-label"></label>
+                <input asp-for="DeveloperUser.FullName" class="form-control" disabled />
+            </div>
+            <form asp-action="Restore">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Restore" class="btn btn-success" />
+            </form>
+            <div>
+                <a asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </div>
 </div>

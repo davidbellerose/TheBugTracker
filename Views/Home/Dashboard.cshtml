@@ -4,9 +4,11 @@
 @using TheBugTracker.Models
 @using TheBugTracker.Models.Enums
 @using TheBugTracker.Services.Interfaces;
+@using TheBugTracker.Services
 
 @inject UserManager<BTUser> UserManager
 @inject IBTRolesService RolesService
+@inject IImageService ImageService
 
 
 
@@ -262,7 +264,7 @@
                                 }
                                 else
                                 {
-                                    <span class="badge bg-warnging text-dark">Unassigned</span>
+                                    <span><strong><em class="text-warning">Unassigned</em></strong></span>
                                 }
                             </div>
                             @* TICKET STATUS *@
@@ -334,8 +336,14 @@
                                 <div class="col-sm-4 d-flex justify-content-center align-items-center">
                                     <!-- <div class=""> -->
                                     <div class="img">
-                                        <img class="shadow" src="https://source.unsplash.com/rDEOVtE7vOs/600x600"
-                                             alt="Another Image zoom-on-hover effect">
+                                        @if (members.AvatarFileData != null)
+                                        {
+                                            <img id="imageFileData" class="img-fluid img-thumbnail" style="width:100px;height:80px;" src="@ImageService.DecodeImage(members.AvatarFileData!, members.AvatarFileContentType!)" />
+                                        }
+                                        else
+                                        {
+                                            <img id="imageFileData" class="img-fluid img-thumbnail" src="~/image/defaultUserImage.png" alt="User Image" style="width:100px;height:80px;" />
+                                        }
                                     </div>
                                     <!-- </div> -->
                                 </div>
@@ -577,7 +585,7 @@ TICKET STATUS               canvas.js                              TICKET STATUS
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Development)).Count(),
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Testing)).Count(),
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count()
-                                                                                                                                                                                                                                            ],
+                                                                                                                                                                                                                                                            ],
                     backgroundColor: [
                         'rgba(138, 218, 178, 0.9)',
                         'rgba(56, 135, 190, 0.9)',
