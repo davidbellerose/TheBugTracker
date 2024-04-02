@@ -1,0 +1,6 @@
+﻿@mixin box-shadow {
+    border-radius: 7px;
+    box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+    -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+    -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+}

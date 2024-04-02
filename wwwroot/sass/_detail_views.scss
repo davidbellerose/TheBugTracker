@@ -1,0 +1,107 @@
+﻿
+
+.detail-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    margin-top: 1.5rem;
+}
+
+.detail-card-section {
+    display: grid;
+    grid-row-gap: 10%;
+    height: 100%;
+}
+
+.detail-card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    background-color: white;
+    @include box-shadow;
+
+    ul {
+        margin: 0;
+        padding: 0 1rem;
+    }
+}
+
+.detail-card-wrapper > * {
+    flex: 2 300px;
+    flex-basis: 50%;
+}
+
+.detail-card-image img {
+    width: 100%;
+    height: auto;
+    padding: 5px 0 0 5px;
+    margin: 0;
+    border: none;
+}
+
+.detail-card-content {
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    /*justify-content: space-between;*/
+}
+
+.detail-card-header {
+    margin-bottom: 1rem;
+}
+
+.detail-card-body {
+}
+
+.detail-card-footer {
+}
+
+.detail-card-dates li {
+    text-decoration: none;
+    list-style: none;
+    /*margin-left: 0.5rem;*/
+}
+
+.detail-card-activity li {
+    text-decoration: none;
+    list-style: none;
+    /*margin-left: 0.5rem;*/
+}
+
+.detail-card-status span {
+    margin-left: 1rem;
+}
+
+.detail-card-status .progress-value {
+    color: white;
+    background-color: $bright-color;
+    border-radius: 5px;
+    margin: 1rem;
+    padding: 0;
+}
+
+.detail-card-actions {
+    display: flex;
+    justify-content: start;
+
+    a {
+        margin: 1rem;
+        margin-top: 1.8rem;
+    }
+}
+
+.project-manager-card {
+    @include box-shadow;
+}
+
+.activity-log-card {
+    @include box-shadow;
+}
+
+
+@media all and (max-width: 767px) {
+    .detail-card-wrapper > * {
+        flex: 1 400px;
+    }
+}

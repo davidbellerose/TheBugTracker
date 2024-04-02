@@ -735,8 +735,10 @@ a:focus {
 }
 .dashboard-project-container .responsive-table .table-row {
   background-color: #ffffff;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-radius: 7px;
+  box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
 }
 .dashboard-project-container .responsive-table .col-1 {
   flex-basis: 55%;
@@ -836,8 +838,10 @@ a:focus {
 }
 .dashboard-ticket-container .responsive-table .table-row {
   background-color: #ffffff;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-radius: 7px;
+  box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
 }
 .dashboard-ticket-container .responsive-table .col-1 {
   flex-basis: 25%;
@@ -969,12 +973,14 @@ a:focus {
 }
 .members-container .card {
   background: #fff;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08), 0 0 6px rgba(0, 0, 0, 0.05);
   border: 1;
-  border-radius: 0.5rem;
   margin: 0;
   padding: 0;
   max-width: 450px;
+  border-radius: 7px;
+  box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
 }
 .members-container .card-body {
   padding: 0;
@@ -1076,8 +1082,11 @@ a:focus {
 }
 .projects-container .responsive-table .table-row {
   background-color: #ffffff;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-radius: 7px;
+  border-radius: 7px;
+  box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
 }
 .projects-container .responsive-table .col-1 {
   flex-basis: 20%;
@@ -1185,8 +1194,11 @@ a:focus {
 }
 .tickets-container .responsive-table .table-row {
   background-color: #ffffff;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   border-radius: 7px;
+  border-radius: 7px;
+  box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
 }
 .tickets-container .responsive-table .col-1 {
   flex-basis: 35%;
@@ -1276,4 +1288,110 @@ a:focus {
   background-color: #e2e5e9;
   background-color: black;
   border-color: gray;
+}
+
+.detail-card-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin-top: 1.5rem;
+}
+
+.detail-card-section {
+  display: grid;
+  grid-row-gap: 10%;
+  height: 100%;
+}
+
+.detail-card-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  background-color: white;
+  border-radius: 7px;
+  box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+}
+.detail-card-wrapper ul {
+  margin: 0;
+  padding: 0 1rem;
+}
+
+.detail-card-wrapper > * {
+  flex: 2 300px;
+  flex-basis: 50%;
+}
+
+.detail-card-image img {
+  width: 100%;
+  height: auto;
+  padding: 5px 0 0 5px;
+  margin: 0;
+  border: none;
+}
+
+.detail-card-content {
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  /*justify-content: space-between;*/
+}
+
+.detail-card-header {
+  margin-bottom: 1rem;
+}
+
+.detail-card-dates li {
+  text-decoration: none;
+  list-style: none;
+  /*margin-left: 0.5rem;*/
+}
+
+.detail-card-activity li {
+  text-decoration: none;
+  list-style: none;
+  /*margin-left: 0.5rem;*/
+}
+
+.detail-card-status span {
+  margin-left: 1rem;
+}
+
+.detail-card-status .progress-value {
+  color: white;
+  background-color: #176B87;
+  border-radius: 5px;
+  margin: 1rem;
+  padding: 0;
+}
+
+.detail-card-actions {
+  display: flex;
+  justify-content: start;
+}
+.detail-card-actions a {
+  margin: 1rem;
+  margin-top: 1.8rem;
+}
+
+.project-manager-card {
+  border-radius: 7px;
+  box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+}
+
+.activity-log-card {
+  border-radius: 7px;
+  box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+  -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
+}
+
+@media all and (max-width: 767px) {
+  .detail-card-wrapper > * {
+    flex: 1 400px;
+  }
 }

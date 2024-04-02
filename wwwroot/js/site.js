@@ -73,4 +73,3 @@ $(function () {
         $("#hamburger-toggle").removeClass('changed'); // toggle hamburger/x icon
     });
 });
-
