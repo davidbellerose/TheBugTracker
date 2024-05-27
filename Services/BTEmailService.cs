@@ -27,6 +27,9 @@ namespace TheBugTracker.Services
         {
             MimeMessage email = new();
 
+            //added this
+            //var emailSender = _mailSettings.Mail ?? Environment.GetEnvironmentVariable("Email");
+
             email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
             email.To.Add(MailboxAddress.Parse(emailTo));
             email.Subject = subject;
@@ -41,6 +44,16 @@ namespace TheBugTracker.Services
             try
             {
                 using var smtp = new SmtpClient();
+
+                //added this
+                //var host = _mailSettings.Host ?? Environment.GetEnvironmentVariable("EmailHost");
+                //var port = _mailSettings.Port != 0 ? _mailSettings.Port : int.Parse(Environment.GetEnvironmentVariable("EmailPort")!);
+                //var password = _mailSettings.Password ?? Environment.GetEnvironmentVariable("EmailPassword");
+
+                //swapped this
+                //smtp.Connect(host, port, SecureSocketOptions.StartTls);
+                //smtp.Authenticate(emailSender, password);
+
                 smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
                 smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
 

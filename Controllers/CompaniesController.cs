@@ -50,8 +50,7 @@ namespace TheBugTracker.Controllers
         }
 
         // POST: Companies/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // Company is created at registration?
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] Company company)
@@ -111,7 +110,8 @@ namespace TheBugTracker.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Details", "Companies", new {id = company.Id} );
             }
             return View(company);
         }

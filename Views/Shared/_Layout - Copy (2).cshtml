@@ -36,15 +36,13 @@
         <div class="header-wrapper">
             <div class="header-container">
                 <div class="header-brand">
-                    <img src="~/image/bblogo.svg" style="height: 60px;width:auto;"/><span class="bblogo">
-                        <img src="~/image/bigbug.png" style="height:60px;width: auto;"/>
-                    </span>
+                    <img src="~/image/bblogo.svg" /><span class="bblogo">BigBug</span>
                 </div>
                 <div class="hamburger">
                     <a href="javascript:void(0);" class="sidebar-brand" id="hamburger-toggle">
                     </a>
                 </div>
-                <div class="company-name">
+                <div class="w-100 ps-5">
                     @if (bTUser != null)
                     {
                     var company = Context.Companies.FirstOrDefault(c => c.Id == bTUser.CompanyId);
@@ -146,12 +144,6 @@
                         }
 
                     </ul>
-                }
-                else
-                {
-                 <ul class="mt-5">
-                        <li><a class="nav-link-a text-white" asp-area="Identity" asp-page="/Account/Login">Sign In / Register</a></li>
-                 </ul>   
                 }
             </aside>
 

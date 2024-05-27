@@ -117,7 +117,7 @@ namespace TheBugTracker.Areas.Identity.Pages.Account
                     LastName = Input.LastName,
                     CompanyId = newCompanyId,
                     AvatarFileData = (await _imageService.EncodeImageAsync(Input.ImageFile)) ??
-            (await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"])),
+                      (await _imageService.EncodeImageAsync(_configuration["DefaultUserImage"])),
                     AvatarFileContentType = Input.ImageFile is null ?
 Path.GetExtension(_configuration["DefaultUserImage"]) :
 _imageService.ContentType(Input.ImageFile)

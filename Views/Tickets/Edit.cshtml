@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<div class="crud-container">
+<div class="crud-container ms-sm-5 mt-5">
     <h2>Edit Ticket</h2>
 
     <h3>@Model.Project.Name</h3>
@@ -50,10 +50,11 @@
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-actions" />
+                    <a onclick="javascript:history.back()" class="btn btn-cancel ms-2">Cancel</a>
                 </div>
             </form>
             <div>
-                <a asp-action="Index">Back to List</a>
+                <a class="btn-back" onclick="javascript:history.back()">Back</a>
             </div>
         </div>
     </div>

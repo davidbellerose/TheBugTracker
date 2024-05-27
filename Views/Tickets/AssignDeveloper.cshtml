@@ -2,13 +2,11 @@
 
 
 <div class="container">
-    <h2>Assign Developer For</h2>
     <div class="row">
         <div class="col-md-6">
-            <h2>@Model.Ticket.Project.Name</h2>
-            <h3>@Model.Ticket.Title</h3>
-            <a style="font-size:small" asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Ticket.ProjectId">@Model.Ticket.Project.Name</a>
-            <div class="card">
+            <h4 class="mt-4 mb-4">@Model.Ticket.Title</h4>
+            Project: &nbsp;<a style="font-size:small" asp-action="Details" asp-controller="Projects" asp-route-id="@Model.Ticket.ProjectId">@Model.Ticket.Project.Name</a>
+            <div class="card mt-4">
                 <div class="card-header">
                     <label class="control-label">Assign Developer to Ticket</label>
 
@@ -28,7 +26,8 @@
                         <div>If Member/s not showing, Assign Member to Developer Role and Add Member to your Team.
                         </div>
                         <div class="form-group mt-3">
-                            <input type="submit" value="Assign" class="btn btn-primary" />
+                            <input type="submit" value="Assign" class="btn btn-actions" />
+                            <a onclick="javascript:history.back()" class="btn btn-cancel ms-2">Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -36,6 +35,6 @@
         </div>
     </div>
     <div>
-        <a asp-action="UnassignedTickets" asp-controller="Tickets">UnasignedTickets</a> |
+        <a class="btn-back" onclick="javascript:history.back()">Back</a>
     </div>
 </div>

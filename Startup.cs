@@ -102,8 +102,8 @@ namespace TheBugTracker
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                    pattern: "{controller=Home}/{action=Dashboard}/{id?}");
+                endpoints.MapRazorPages().RequireAuthorization();
             });
         }
     }

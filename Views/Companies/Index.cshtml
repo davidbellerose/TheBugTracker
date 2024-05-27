@@ -1,14 +1,19 @@
 ﻿@model IEnumerable<TheBugTracker.Models.Company>
 
+
+@using TheBugTracker.Services
+@using TheBugTracker.Models.Enums
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (User.IsInRole(nameof(Roles.Administrator)) || User.IsInRole(nameof(Roles.ProjectManager)))
+{
+    <p>
+        <a asp-action="Create" class="btn btn-actions">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>

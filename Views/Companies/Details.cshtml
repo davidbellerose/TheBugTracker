@@ -1,30 +1,71 @@
 ﻿@model TheBugTracker.Models.Company
+@using TheBugTracker.Models.Enums
+@using TheBugTracker.Services.Interfaces
+@using Microsoft.AspNetCore.Identity
+@using TheBugTracker.Services
+
+@inject IImageService ImageService
+@inject UserManager<BTUser> UserManager
 
 @{
     ViewData["Title"] = "Details";
+    var admin = nameof(Roles.Administrator).ToString();
+    var owner = await UserManager.GetUsersInRoleAsync(admin);
+    var administrator = owner.Where(u => u.CompanyId == Model.Id).FirstOrDefault();
 }
 
-<h1>Details</h1>
+<span id="projectsIcon">
+    <i class="bi-building"></i> Company Details &nbsp;    @if (User.IsInRole(nameof(Roles.Administrator)))
+    {
+        <a asp-action="Edit" class="btn btn-actions" asp-route-id="@Model.Id">Edit</a>
+    }
+</span>
+
+<div class="row m-2">
+    <div class="col-md-9 col-lg-8 col-xxl-7 offset-md-1">
+        <div class="company-container mt-5">
+            <div class="card p-5 pb-0">
+                <div class="card-header bg-transparent">
+                    <h3>@Html.DisplayFor(model => model.Name)</h3>
+                </div>
+                <div class="card-body p-5">
+                    <div class="col">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-sm-4 d-flex justify-content-start align-items-center">
+                                <div class="img">
+                                    @if (administrator.AvatarFileData != null)
+                                    {
+                                        <img id="imageFileData" class="img-fluid img-thumbnail" style="width:80px;height:80px;" src="@ImageService.DecodeImage(administrator.AvatarFileData!, administrator.AvatarFileContentType!)" />
+                                    }
+                                    else
+                                    {
+                                        <img id="imageFileData" class="img-fluid img-thumbnail" src="~/image/defaultUserImage.png" alt="User Image" style="width:100px;height:80px;" />
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="card-body">
+                                    <div class="clearfix mb-3">
+                                    </div>
+                                    <div class="my-2">
+                        <h3>@administrator.FullName</h3>
+                                    </div>
+                                    <div class="mb-3">
+                                        <h5 class="text-uppercase role">Owner / CEO</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <h4 class="mt-5">About:</h4>
+                    <p style="font-size: 1.3rem;color:#62605f">@Html.DisplayFor(model => model.Description)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div>
-    <h4>Company</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a class="btn-back" onclick="javascript:history.back()">Back</a>
 </div>

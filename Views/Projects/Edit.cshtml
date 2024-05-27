@@ -50,7 +50,6 @@
                     <div class="form-group">
                         <label class="control-label">Project Manager</label>
                         <select asp-for="PmId" class="form-control" asp-items="@Model.PMList">
-                            <option></option>
                         </select>
                     </div>
                 }
@@ -70,7 +69,7 @@
                 <div class="form-group">
                     <label class="control-label">Project Image</label>
                     <input asp-for="Project.FormFile" class="form-control" type="file" accept=".jpg,.png,.jpeg,.gif,.svg,.webp,.bmp"
-                           onchage="document.getElementById('imageFileData').src=window.URL.createObjectURL(this.files[0])" />
+                           onchange="document.getElementById('imageFileData').src=window.URL.createObjectURL(this.files[0])" />
                     <span asp-validation-for="Project.FormFile" class="text-danger"></span>
                 </div>
 
@@ -78,12 +77,13 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-actions" />
+                <a onclick="javascript:history.back()" class="btn btn-cancel ms-2">Cancel</a>
             </div>
         </div>
     </form>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <a class="btn-back" onclick="javascript:history.back()">Back</a>
     </div>
 
 </div>

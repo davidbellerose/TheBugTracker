@@ -37,6 +37,18 @@ a:focus {
     text-decoration: none;
 }
 
+.btn-cancel {
+    color: #176b87;
+    border-color: #176b87;
+}
+
+.btn-cancel:hover,
+.btn-cancel:focus,
+.btn-cancel:active {
+    color: #fff;
+    background-color: $dark-color;
+}
+
 .btn-actions {
     color: #fff;
     background-color: $bright-color;
@@ -47,6 +59,11 @@ a:focus {
 .btn-actions:active {
     color: #fff;
     background-color: $light-color;
+}
+
+.btn-back {
+    color: $bright-color;
+    cursor: pointer;
 }
 
 /*Identity pages*/
@@ -91,3 +108,4 @@ a:focus {
         margin-bottom: 1rem;
     }
 }
+

@@ -11,6 +11,8 @@ namespace TheBugTracker.Models.ViewModels
 
         public MultiSelectList Companies { get; set; }
 
-        public List<string> SelectedRoles { get; set;}
+        //public List<string> SelectedRoles { get; set; }
+
+        public string SelectedRoles { get; set; }
     }
 }

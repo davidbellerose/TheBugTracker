@@ -59,7 +59,7 @@ namespace TheBugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Property,OldValue,NewValue,Created,Desctiption,TicketId,UserId")] TicketHistory ticketHistory)
+        public async Task<IActionResult> Create([Bind("Id,Property,OldValue,NewValue,Created,Description,TicketId,UserId")] TicketHistory ticketHistory)
         {
             if (ModelState.IsValid)
             {

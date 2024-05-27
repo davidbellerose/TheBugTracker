@@ -51,7 +51,8 @@
         <form asp-action="Restore">
             <input type="hidden" asp-for="Id" />
             <input type="submit" value="Restore" class="btn btn-actions" />
+            <a onclick="javascript:history.back()" class="btn btn-cancel ms-2">Cancel</a>
         </form>
-        <a asp-action="Index">Back to List</a>
+        <a class="btn-back" onclick="javascript:history.back()">Back</a>
     </div>
 </div>

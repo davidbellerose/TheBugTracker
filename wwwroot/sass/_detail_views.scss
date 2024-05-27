@@ -1,9 +1,9 @@
 ﻿
 
 .detail-card-container {
-    display: flex;
+/*    display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center;*/
     height: auto;
     margin-top: 1.5rem;
 }
@@ -24,18 +24,20 @@
     ul {
         margin: 0;
         padding: 0 1rem;
+        list-style-type: none;
     }
 }
 
 .detail-card-wrapper > * {
     flex: 2 300px;
     flex-basis: 50%;
+    margin-top: 1rem;
 }
 
 .detail-card-image img {
     width: 100%;
     height: auto;
-    padding: 5px 0 0 5px;
+    padding: 0px 0 0 1rem;
     margin: 0;
     border: none;
 }
@@ -49,12 +51,16 @@
 
 .detail-card-header {
     margin-bottom: 1rem;
+
+    h3{
+        margin-left: 1rem;
+        margin-bottom: 1.5rem;
+    }
 }
 
-.detail-card-body {
-}
-
-.detail-card-footer {
+.detail-card-body ul{
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .detail-card-dates li {
@@ -69,39 +75,158 @@
     /*margin-left: 0.5rem;*/
 }
 
-.detail-card-status span {
-    margin-left: 1rem;
-}
-
-.detail-card-status .progress-value {
+.detail-card-status .progress {
     color: white;
     background-color: $bright-color;
-    border-radius: 5px;
-    margin: 1rem;
+    background-color: lightgray;
+    border-radius: 7px;
+    margin: 1rem 0 1rem 0;
     padding: 0;
+    font-size: 2rem;
 }
 
-.detail-card-actions {
-    display: flex;
-    justify-content: start;
+.detail-card-status .progress-bar {
+    color: white;
+    background-color: $bright-color;
+}
 
-    a {
-        margin: 1rem;
-        margin-top: 1.8rem;
+    .detail-card-actions {
+        display: flex;
+        justify-content: start;
+
+        a {
+            margin: 0.5rem;
+            margin-top: 1.8rem;
+        }
     }
-}
 
-.project-manager-card {
-    @include box-shadow;
-}
-
-.activity-log-card {
-    @include box-shadow;
-}
-
-
-@media all and (max-width: 767px) {
-    .detail-card-wrapper > * {
-        flex: 1 400px;
+    .detail-card-developer, .detail-card-pm {
+        margin-left: 1rem;
     }
+
+    .project-manager-card {
+        @include box-shadow;
+    }
+
+    .activity-log-card {
+        @include box-shadow;
+    }
+
+    .card-shadow {
+        @include box-shadow;
+        border: none;
+    }
+
+    .ticket-comments {
+        overflow-y: auto;
+        height: 400px;
+        border: 1px solid lightgray;
+        border-radius: 7px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .attachments-list {
+        overflow-y: auto;
+        height: 300px;
+        border: 1px solid lightgray;
+        border-radius: 7px;
+        //padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .attachments-container {
+        .list ul:nth-child(odd) {
+            background-color: lightgray;
+        }
+
+        .list ul:nth-child(even) {
+            background-color: #fff;
+        }
+        /* big */
+        @media screen and (min-width:600px) {
+
+            .list {
+                display: table;
+                width: 100%;
+            }
+
+            .list ul {
+                display: table-row;
+            }
+
+            .list ul:first-child li {
+                background-color: #176b87;
+                color: #fff;
+            }
+
+            .list ul > li {
+                display: table-cell;
+                padding: .5em 1em;
+            }
+        }
+        /* small */
+        @media screen and (max-width:599px) {
+
+            .list ul {
+                border: solid 1px #ccc;
+                display: block;
+                list-style: none;
+                margin: 1em;
+                padding: .5em 1em;
+            }
+
+            .list ul:first-child {
+                display: none;
+            }
+
+            .list ul > li {
+                display: block;
+                padding: .25em 0;
+            }
+
+            .list ul:nth-child(odd) > li + li {
+                border-top: solid 1px #ccc;
+            }
+
+            .list ul:nth-child(even) > li + li {
+                border-top: solid 1px #eee;
+            }
+
+            .list ul > li:before {
+                /*color: red;*/
+                content: attr(data-label);
+                display: inline-block;
+                font-size: 75%;
+                font-weight: bold;
+                text-transform: capitalize;
+                vertical-align: top;
+                width: 50%;
+            }
+
+            .list p {
+                margin: -1em 0 0 50%;
+            }
+        }
+        /* tiny */
+        @media screen and (max-width:349px) {
+
+            .list ul > li:before {
+                display: block;
+            }
+
+            .list p {
+                margin: 0;
+            }
+        }
+    }
+
+    @media all and (max-width: 767px) {
+        .detail-card-wrapper > * {
+            flex: 1 400px;
+        }
+    }
+
+.company-container {
+    @include box-shadow;
 }

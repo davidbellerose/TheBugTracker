@@ -17,15 +17,16 @@
                 <p>@Model.Project.Description</p>
                 <div class="form-group">
                     <label class="control-label">Select Project Manager</label>
-                    <select asp-for="PMID" class="form-control" asp-items="@Model.PMList">
+                    <select asp-for="PMID" class="form-control mt-2 mb-2" asp-items="@Model.PMList">
                         <option></option>
                     </select>
-                    <input type="submit" value="Assign" class="btn btn-sm btn-outline-primary" />
+                    <input type="submit" value="Assign" class="btn btn-actions" />
+                    <a onclick="javascript:history.back()" class="btn btn-cancel ms-2">Cancel</a>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <div>
-    <a asp-action="UnassignedProjects">Back to List</a>
+    <a class="btn-back" onclick="javascript:history.back()">Back</a>
 </div>

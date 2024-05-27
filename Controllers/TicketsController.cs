@@ -260,25 +260,26 @@ namespace TheBugTracker.Controllers
                     throw;
                 }
 
-                return RedirectToAction(nameof(AllTickets));
+                //return RedirectToAction(nameof(AllTickets));
+
+                return RedirectToAction("Details", "Tickets", new { id = ticket.Id });
+
+                if (User.IsInRole(nameof(Roles.Administrator)))
+                {
+                    ViewData["ProjectId"] = new SelectList(await _projectService.GetAllProjectsByCompany(btUser.CompanyId), "Id", "Name");
+                }
+                else
+                {
+                    ViewData["ProjectId"] = new SelectList(await _projectService.GetUserProjectsAsync(btUser.Id), "Id", "Name");
+                }
+
+
+                ViewData["TicketPriorityId"] = new SelectList(await _lookupService.GetTicketPrioritiesAsync(), "Id", "Name");
+                ViewData["TicketTypeId"] = new SelectList(await _lookupService.GetTicketTypesAsync(), "Id", "Name");
             }
 
-
-            if (User.IsInRole(nameof(Roles.Administrator)))
-            {
-                ViewData["ProjectId"] = new SelectList(await _projectService.GetAllProjectsByCompany(btUser.CompanyId), "Id", "Name");
-            }
-            else
-            {
-                ViewData["ProjectId"] = new SelectList(await _projectService.GetUserProjectsAsync(btUser.Id), "Id", "Name");
-            }
-
-
-            ViewData["TicketPriorityId"] = new SelectList(await _lookupService.GetTicketPrioritiesAsync(), "Id", "Name");
-            ViewData["TicketTypeId"] = new SelectList(await _lookupService.GetTicketTypesAsync(), "Id", "Name");
-
-
-            return View(ticket);
+            //return View(ticket);
+            return RedirectToAction("Details", "Tickets", new { id = ticket.Id });
         }
 
         // GET: Tickets/Edit/5
@@ -345,13 +346,15 @@ namespace TheBugTracker.Controllers
                 Ticket newTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id);
                 await _ticketHistoryService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
 
-                return RedirectToAction(nameof(AllTickets));
+                //return RedirectToAction(nameof(AllTickets));
+                return RedirectToAction("Details", "Tickets", new { id = ticket.Id });
             }
             ViewData["TicketPriorityId"] = new SelectList(await _lookupService.GetTicketPrioritiesAsync(), "Id", "Name", ticket.TicketPriorityId);
             ViewData["TicketStatusId"] = new SelectList(await _lookupService.GetTicketStatusesAsync(), "Id", "Name", ticket.TicketStatusId);
             ViewData["TicketTypeId"] = new SelectList(await _lookupService.GetTicketTypesAsync(), "Id", "Name", ticket.TicketTypeId);
 
-            return View(ticket);
+            //return View(ticket);
+            return RedirectToAction("Details", "Tickets", new { id = ticket.Id });
         }
 
 
@@ -413,7 +416,7 @@ namespace TheBugTracker.Controllers
             ticket.Updated = DateTimeOffset.Now;
             await _ticketService.ArchiveTicketAsync(ticket);
 
-            return RedirectToAction(nameof(AllTickets));
+            return RedirectToAction(nameof(ArchivedTickets));
         }
 
 

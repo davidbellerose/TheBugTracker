@@ -14,6 +14,7 @@ using TheBugTracker.Models;
 using TheBugTracker.Models.Enums;
 using TheBugTracker.Models.ViewModels;
 using TheBugTracker.Services.Interfaces;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using Project = TheBugTracker.Models.Project;
 
 namespace TheBugTracker.Controllers
@@ -237,7 +238,7 @@ namespace TheBugTracker.Controllers
                     {
                         await _projectService.AddProjectManagerAsync(model.PmId, model.Project.Id);
                     }
-                    return RedirectToAction("AllProjects");
+                    return RedirectToAction("Details", "Projects", new { id = model.Project.Id });
                 }
                 catch (Exception)
                 {
@@ -247,7 +248,8 @@ namespace TheBugTracker.Controllers
 
             }
 
-            return RedirectToAction("AllProjects");
+            //return RedirectToAction("AllProjects");
+            return RedirectToAction("Details", "Projects", new { id = model.Project.Id });
         }
 
         // GET: Projects/Edit/5
@@ -294,7 +296,8 @@ namespace TheBugTracker.Controllers
                     {
                         await _projectService.AddProjectManagerAsync(model.PmId, model.Project.Id);
                     }
-                    return RedirectToAction("AllProjects");
+                    //return RedirectToAction("AllProjects");
+                    return RedirectToAction("Details", "Projects", new { id = model.Project.Id });
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -310,7 +313,8 @@ namespace TheBugTracker.Controllers
 
             }
 
-            return RedirectToAction("AllProjects");
+            //return RedirectToAction("AllProjects");
+                return RedirectToAction("Details", "Projects", new { id = model.Project.Id });
         }
 
         // GET: Projects/Delete/5
@@ -349,7 +353,7 @@ namespace TheBugTracker.Controllers
 
             await _projectService.ArchiveProjectAsync(project);
 
-            return RedirectToAction(nameof(AllProjects));
+            return RedirectToAction(nameof(ArchivedProjects));
         }
 
 
@@ -389,7 +393,8 @@ namespace TheBugTracker.Controllers
 
             await _projectService.RestoreProjectAsync(project);
 
-            return RedirectToAction(nameof(AllProjects));
+            //return RedirectToAction(nameof(AllProjects));
+            return RedirectToAction("Details", "Projects", new { id = project.Id });
         }
 
 

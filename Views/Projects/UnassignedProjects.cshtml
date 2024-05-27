@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<TheBugTracker.Models.Project>
 @using TheBugTracker.Services.Interfaces
+@inject IBTProjectService ProjectService
 
 @{
     ViewData["Title"] = "Unassigned Projects";
@@ -7,51 +8,41 @@
 
 <h1>Unassigned Projects</h1>
 
-<div class="projects-container">
+<div class="dashboard-project-container">
     <ul class="responsive-table">
         <li class="table-header">
-            <div class="col col-1">Name</div>
-            <div class="col col-2">Description</div>
-            <div class="col col-3">Start Date</div>
-            <div class="col col-4">End Date</div>
-            <div class="col col-5">Priority</div>
-            <div class="col col-6"></div>
+            <div class="col col-1">Title</div>
+            <div class="col col-2">Project Manager</div>
+            <div class="col col-3">Priority</div>
+            <div class="col col-4">Start Date</div>
+            <div class="col col-5">End Date</div>
         </li>
-        @foreach (var project in Model.OrderByDescending(d => d.StartDate))
+        @foreach (var project in Model.Take(8).OrderByDescending(d => d.StartDate))
         {
+            BTUser projectManager = await ProjectService.GetProjectManagerAsync(project.Id);
             <li class="table-row">
                 <div class="col col-1" data-label="Project">
                     <a asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id" style="color:black">
                         <strong>@project.Name</strong>
                     </a>
                 </div>
-                <div class="col col-2" data-label="Description">@project.Description</div>
-                <div class="col col-3" data-label="Start Date">@project.StartDate.ToString("MM/dd/yyyy")</div>
-                <div class="col col-4" data-label="End Date">@project.EndDate.ToString("MM/dd/yyyy")</div>
-                @if (project.ProjectPriority.Name == "Low")
-                {
-                    <div class="col col-5" data-label="Priority Status"><span class="badge-low">@project.ProjectPriority?.Name</span></div>
-                }
-                else if (project.ProjectPriority.Name == "Medium")
-                {
-                    <div class="col col-5" data-label="Priority Status"><span class="badge-medium">@project.ProjectPriority?.Name</span></div>
-
-                }
-                else if (project.ProjectPriority.Name == "High")
-                {
-                    <div class="col col-5" data-label="Priority Status"><span class="badge-high">@project.ProjectPriority?.Name</span></div>
-
-                }
-                else if (project.ProjectPriority.Name == "Urgent")
-                {
-                    <div class="col col-5" data-label="Priority Status"><span class="badge-urgent">@project.ProjectPriority?.Name</span></div>
-                }
-                <div class="col col-6" data-label="">
-                    <a class="" asp-action="Details" asp-controller="Projects" asp-route-id="@project.Id">
-                        <i class="bi bi-eye-fill"></i>
-                    </a>
+                <div class="col col-2" data-label="Project Manager">
+                    @if (projectManager != null)
+                    {
+                        <span>@projectManager.FullName</span>
+                    }
+                    else
+                    {
+                        <span><i>Unassigned</i></span>
+                    }
                 </div>
+                <div class="col col-3" data-label="Priority Status">@project.ProjectPriority?.Name</div>
+                <div class="col col-4" data-label="Start Date">@project.StartDate.ToString("MM/dd/yyyy")</div>
+                <div class="col col-5" data-label="End Date">@project.EndDate.ToString("MM/dd/yyyy")</div>
             </li>
         }
     </ul>
+</div>
+<div>
+    <a class="btn-back" onclick="javascript:history.back()">Back</a>
 </div>

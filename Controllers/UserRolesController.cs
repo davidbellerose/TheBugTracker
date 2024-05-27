@@ -37,7 +37,8 @@ namespace TheBugTracker.Controllers
 
                 viewModel.BTUser = user;
                 IEnumerable<string> selected = await _rolesService.GetUserRolesAsync(user);
-                viewModel.Roles = new MultiSelectList(await _rolesService.GetRolesAsync(), "Name", "Name", selected);
+                //viewModel.Roles = new MultiSelectList(await _rolesService.GetRolesAsync(), "Name", "Name", selected);
+                viewModel.Roles = new SelectList(await _rolesService.GetRolesAsync(), "Name", "Name", selected);
 
 
                 model.Add(viewModel);
@@ -54,7 +55,8 @@ namespace TheBugTracker.Controllers
             BTUser btUser = (await _companyInfoService.GetAllMembersAsync(companyId)).FirstOrDefault(u => u.Id == member.BTUser.Id);
             IEnumerable<string> roles = await _rolesService.GetUserRolesAsync(btUser);
 
-            string userRole = member.SelectedRoles.FirstOrDefault();
+            //string userRole = member.SelectedRoles.FirstOrDefault();
+            string userRole = member.SelectedRoles;
 
             if (!string.IsNullOrEmpty(userRole))
             {
