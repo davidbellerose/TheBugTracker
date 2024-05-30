@@ -1,7 +1,11 @@
 ﻿@model TheBugTracker.Models.Ticket
+@using TheBugTracker.Models.Enums
+@using TheBugTracker.Services.Interfaces
+@inject IBTTicketService TicketService
 
 @{
     ViewData["Title"] = "Edit";
+    BTUser developer = await TicketService.GetTicketDeveloperAsync(Model.Id, Model.Project.CompanyId.Value);
 }
 
 <div class="crud-container ms-sm-5 mt-5">
@@ -18,7 +22,7 @@
                 <input type="hidden" asp-for="ProjectId" />
                 <input type="hidden" asp-for="Created" />
                 <input type="hidden" asp-for="OwnerUserId" />
-                <input type="hidden" asp-for="DeveloperUserId" />
+                @* <input type="hidden" asp-for="DeveloperUserId" /> *@
                 <input type="hidden" asp-for="Archived" />
 
 
@@ -48,6 +52,15 @@
                     <select asp-for="TicketStatusId" class="form-control" asp-items="ViewBag.TicketStatusId"></select>
                     <span asp-validation-for="TicketStatusId" class="text-danger"></span>
                 </div>
+                @if (User.IsInRole(Roles.Administrator.ToString()))
+                {
+                    <div class="form-group">
+                        <label class="control-label">Developer</label>
+                        <div class="mb-1">Currently Assigned: @developer.FullName</div>
+                        <select asp-for="DeveloperUserId" class="form-control" asp-items="@ViewBag.Developers">
+                        </select>
+                    </div>
+                }
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-actions" />
                     <a onclick="javascript:history.back()" class="btn btn-cancel ms-2">Cancel</a>

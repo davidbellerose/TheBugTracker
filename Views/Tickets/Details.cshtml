@@ -326,13 +326,45 @@
                             }
                             else if (history.Property.Equals("TicketComment") || history.Property.Equals("TicketAttachment"))
                             {
-                                <p>A <b>@history.Property</b> was added.</p>
+                                <p>A <b>@history.Property</b was added.</p>
                             }
                             else
                             {
-                                <p>The ticket <b>@history.Property</b> was edited</p>
-                                <p>@($"Previous {history.Property}:  ") <span style="color:red">@history.OldValue</span></p>
-                                <p>@($"Current {history.Property}:  ") <span style="color:green">@history.NewValue</span></p>
+                                @* <p>The ticket <b>@history.Property</b> was edited</p> *@
+                                // if @history.Property = "TicketType/TicketPriority/TicketStatus"
+                                //{<p>The ticket <b>Priority</b> was edited.</p>}
+                                @switch(@history.Property)
+                                {
+                                    case "TicketType":
+                                        // Use the text block below to separate html elements from code
+                                        <text>
+                                            <p>The ticket <b>Type</b> was edited.</p>
+                                            <p>@($"Previous Ticket Type:  ") <span style="color:red">@history.OldValue</span></p>
+                                            <p>@($"Current Ticket Type:  ") <span style="color:green">@history.NewValue</span></p>
+                                        </text>
+                                        break;  // Always break each case
+                                    case "TicketPriority":
+                                        <text>
+                                            <p>The ticket <b>Priority</b> was edited.</p>
+                                            <p>@($"Previous Ticket Priority:  ") <span style="color:red">@history.OldValue</span></p>
+                                            <p>@($"Current Ticket Priority:  ") <span style="color:green">@history.NewValue</span></p>
+                                        </text>
+                                        break;
+                                    case "TicketStatus":
+                                        <text>
+                                            <p>The ticket <b>Status</b> was edited.</p>
+                                            <p>@($"Previous Ticket Status:  ") <span style="color:red">@history.OldValue</span></p>
+                                            <p>@($"Current Ticket Status:  ") <span style="color:green">@history.NewValue</span></p>
+                                        </text>
+                                        break;
+                                    default:
+                                        <text>
+                                            <p>The ticket <b>@history.Property</b> was edited</p>
+                                            <p>@($"Previous {history.Property}:  ") <span style="color:red">@history.OldValue</span></p>
+                                            <p>@($"Current {history.Property}:  ") <span style="color:green">@history.NewValue</span></p>
+                                        </text>
+                                        break;                   
+                                }
                             }
 
                         </div>

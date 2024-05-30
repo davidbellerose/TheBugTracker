@@ -19,9 +19,10 @@
 
                         <div class="form-group">
                             <label class="col-form-label">Select Developers</label>
-
                             <select required asp-for="DeveloperId" class="form-control" asp-items="@Model.Developers"></select>
-                            <option></option>
+                            <option value="none" selected disabled hidden>
+                                &#11167;
+                            </option>
                         </div>
                         <div>If Member/s not showing, Assign Member to Developer Role and Add Member to your Team.
                         </div>

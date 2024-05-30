@@ -1,8 +1,12 @@
 ﻿@model TheBugTracker.Models.ViewModels.AddProjectWithPMViewModel
 @using TheBugTracker.Models.Enums
+@using TheBugTracker.Models;
+@using TheBugTracker.Services.Interfaces
+@inject IBTProjectService ProjectService
 
 @{
     ViewData["Title"] = "Edit";
+    BTUser projectManager = await ProjectService.GetProjectManagerAsync(Model.Project.Id);
 }
 
 <div class="crud-container">
@@ -49,7 +53,11 @@
                 {
                     <div class="form-group">
                         <label class="control-label">Project Manager</label>
+                        <div>Currently Assigned: @projectManager.FullName</div>
                         <select asp-for="PmId" class="form-control" asp-items="@Model.PMList">
+                            <option value="none" selected disabled hidden>
+                                &#11167;
+                            </option>
                         </select>
                     </div>
                 }

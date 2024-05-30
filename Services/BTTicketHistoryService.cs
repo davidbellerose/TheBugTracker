@@ -107,7 +107,7 @@ namespace TheBugTracker.Services
                         OldValue = oldTicket.TicketPriority.Name,
                         NewValue = newTicket.TicketPriority.Name,
                         Created = DateTimeOffset.Now,
-                        Description = $"New Ticket Priority: {newTicket.TicketPriority}"
+                        Description = $"New Ticket Priority: {newTicket.TicketPriority.Name}"
                     };
 
                     try
@@ -132,7 +132,7 @@ namespace TheBugTracker.Services
                         OldValue = oldTicket.TicketStatus.Name,
                         NewValue = newTicket.TicketStatus.Name,
                         Created = DateTimeOffset.Now,
-                        Description = $"New Ticket Status: {newTicket.TicketStatus}"
+                        Description = $"New Ticket Status: {newTicket.TicketStatus.Name}"
                     };
 
                     try
@@ -156,7 +156,7 @@ namespace TheBugTracker.Services
                         OldValue = oldTicket.TicketType.Name,
                         NewValue = newTicket.TicketType.Name,
                         Created = DateTimeOffset.Now,
-                        Description = $"New Ticket Type: {newTicket.TicketType}"
+                        Description = $"New Ticket Type: {newTicket.TicketType.Name}"
                     };
 
                     try

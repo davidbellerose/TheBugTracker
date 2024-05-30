@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,9 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using TheBugTracker.Data;
 using TheBugTracker.Models;
+using TheBugTracker.Models.Enums;
 using TheBugTracker.Services;
+using TheBugTracker.Services.Interfaces;
 
 namespace TheBugTracker.Areas.Identity.Pages.Account
 {
@@ -26,6 +29,7 @@ namespace TheBugTracker.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<BTUser> _signInManager;
         private readonly UserManager<BTUser> _userManager;
+        private readonly IBTRolesService _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly ApplicationDbContext _context;
@@ -34,6 +38,7 @@ namespace TheBugTracker.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<BTUser> userManager,
+            IBTRolesService roleManager,
             SignInManager<BTUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
@@ -42,6 +47,7 @@ namespace TheBugTracker.Areas.Identity.Pages.Account
             IConfiguration configuration)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
@@ -109,6 +115,8 @@ namespace TheBugTracker.Areas.Identity.Pages.Account
                 await _context.SaveChangesAsync();
 
                 var newCompanyId = newCompany.Id;
+                //used if you want new users to be assigned to co.1
+                //var newCompanyId = 1;
 
                 var user = new BTUser {
                     UserName = Input.Email,
@@ -124,6 +132,11 @@ _imageService.ContentType(Input.ImageFile)
                 };
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
+
+                //added this; new users are automatically assigned Submitter role
+                //depricated, new user must be admin for their own company
+                //submitter assignment happens with the invite link
+                //await _roleManager.AddUserToRoleAsync(user, Roles.Submitter.ToString());
 
                 if (result.Succeeded)
                 {

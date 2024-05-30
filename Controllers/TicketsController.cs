@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,12 +24,13 @@ namespace TheBugTracker.Controllers
     {
         private readonly UserManager<BTUser> _userManager;
         private readonly IBTProjectService _projectService;
+        private readonly IBTRolesService _roleService;
         private readonly IBTLookupService _lookupService;
         private readonly IBTTicketService _ticketService;
         private readonly IBTFileService _fileService;
         private readonly IBTTicketHistoryService _ticketHistoryService;
 
-        public TicketsController(UserManager<BTUser> userManager, IBTProjectService projectService, IBTLookupService lookupService, IBTTicketService ticketService, IBTFileService fileService, IBTTicketHistoryService ticketHistoryService)
+        public TicketsController(UserManager<BTUser> userManager, IBTProjectService projectService, IBTLookupService lookupService, IBTTicketService ticketService, IBTFileService fileService, IBTTicketHistoryService ticketHistoryService, IBTRolesService roleService)
         {
             _userManager = userManager;
             _projectService = projectService;
@@ -35,6 +38,7 @@ namespace TheBugTracker.Controllers
             _ticketService = ticketService;
             _fileService = fileService;
             _ticketHistoryService = ticketHistoryService;
+            _roleService = roleService;
         }
 
 
@@ -236,7 +240,7 @@ namespace TheBugTracker.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId")] Ticket ticket)
+        public async Task<IActionResult> Create([Bind("Id,Title,Description,ProjectId,TicketTypeId,TicketPriorityId,DeveloperUserId")] Ticket ticket)
         {
             BTUser btUser = await _userManager.GetUserAsync(User);
 
@@ -261,21 +265,11 @@ namespace TheBugTracker.Controllers
                 }
 
                 //return RedirectToAction(nameof(AllTickets));
-
                 return RedirectToAction("Details", "Tickets", new { id = ticket.Id });
-
-                if (User.IsInRole(nameof(Roles.Administrator)))
-                {
-                    ViewData["ProjectId"] = new SelectList(await _projectService.GetAllProjectsByCompany(btUser.CompanyId), "Id", "Name");
-                }
-                else
-                {
-                    ViewData["ProjectId"] = new SelectList(await _projectService.GetUserProjectsAsync(btUser.Id), "Id", "Name");
-                }
-
-
+                
                 ViewData["TicketPriorityId"] = new SelectList(await _lookupService.GetTicketPrioritiesAsync(), "Id", "Name");
                 ViewData["TicketTypeId"] = new SelectList(await _lookupService.GetTicketTypesAsync(), "Id", "Name");
+
             }
 
             //return View(ticket);
@@ -292,7 +286,6 @@ namespace TheBugTracker.Controllers
 
             Ticket ticket = await _ticketService.GetTicketByIdAsync(id.Value);
 
-
             if (ticket == null)
             {
                 return NotFound();
@@ -301,6 +294,7 @@ namespace TheBugTracker.Controllers
             ViewData["TicketStatusId"] = new SelectList(await _lookupService.GetTicketStatusesAsync(), "Id", "Name", ticket.TicketStatusId);
             ViewData["TicketTypeId"] = new SelectList(await _lookupService.GetTicketTypesAsync(), "Id", "Name", ticket.TicketTypeId);
 
+            ViewData["Developers"] = new SelectList(await _projectService.GetProjectMembersByRoleAsync(ticket.ProjectId, nameof(Roles.Developer)), "Id", "FullName");
 
             return View(ticket);
         }
@@ -324,7 +318,6 @@ namespace TheBugTracker.Controllers
 
                 try
                 {
-
                     ticket.Updated = DateTimeOffset.Now;
                     await _ticketService.UpdateTicketAsync(ticket);
 
@@ -343,6 +336,7 @@ namespace TheBugTracker.Controllers
                     }
                 }
 
+
                 Ticket newTicket = await _ticketService.GetTicketAsNoTrackingAsync(ticket.Id);
                 await _ticketHistoryService.AddHistoryAsync(oldTicket, newTicket, btUser.Id);
 
@@ -352,6 +346,8 @@ namespace TheBugTracker.Controllers
             ViewData["TicketPriorityId"] = new SelectList(await _lookupService.GetTicketPrioritiesAsync(), "Id", "Name", ticket.TicketPriorityId);
             ViewData["TicketStatusId"] = new SelectList(await _lookupService.GetTicketStatusesAsync(), "Id", "Name", ticket.TicketStatusId);
             ViewData["TicketTypeId"] = new SelectList(await _lookupService.GetTicketTypesAsync(), "Id", "Name", ticket.TicketTypeId);
+
+            ViewData["Developer"] = new SelectList(await _roleService.GetUsersInRoleAsync(Roles.Developer.ToString(), ticket.ProjectId), "Id", "FullName");
 
             //return View(ticket);
             return RedirectToAction("Details", "Tickets", new { id = ticket.Id });
