@@ -4,10 +4,8 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
-
 <div>
-    <h4>Notification</h4>
+    <h4>Notification Det</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -28,34 +26,34 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Created)
         </dd>
+        <dt class="col-sm-2">
+            From
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sender.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            To
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Recipient.FullName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ticket)
+        </dt>
+        <dd class="col-sm-10">
+
+            <a asp-action="Details" asp-controller="Tickets" asp-route-id="@Model.TicketId">@Model.TicketId</a>
+        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Viewed)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Viewed)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ticket)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ticket.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Recipient)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Recipient.Id)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sender)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sender.Id)
-        </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    <a class="btn btn-actions" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
     <a onclick="javascript:history.back()" class="btn btn-cancel ms-2">Cancel</a>
-    <a class="btn-back" onclick="javascript:history.back()">Back</a>
 </div>

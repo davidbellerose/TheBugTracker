@@ -6,6 +6,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using TheBugTracker.Data;
 using TheBugTracker.Models;
+using TheBugTracker.Extensions;
+using Microsoft.AspNetCore.Identity;
+using TheBugTracker.Services.Interfaces;
+using TheBugTracker.Models.Enums;
 
 namespace TheBugTracker.Controllers
 {
@@ -13,17 +17,35 @@ namespace TheBugTracker.Controllers
     public class NotificationsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<BTUser> _userManager;
+        private readonly IBTRolesService _roleService;
 
-        public NotificationsController(ApplicationDbContext context)
+        public NotificationsController(ApplicationDbContext context, UserManager<BTUser> userManager, IBTRolesService roleService)
         {
             _context = context;
+            _userManager = userManager;
+            _roleService = roleService;
         }
 
         // GET: Notifications
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Notifications.Include(n => n.Recipient).Include(n => n.Sender).Include(n => n.Ticket);
-            return View(await applicationDbContext.ToListAsync());
+            // need userId, only show notifications where sender or recipient is user
+            // admin should see all
+            BTUser btUser = await _userManager.GetUserAsync(User);
+
+            if (User.IsInRole(nameof(Roles.Administrator)))
+            {
+                var applicationDbContext = _context.Notifications.Include(n => n.Recipient).Include(n => n.Sender).Include(n => n.Ticket);
+                return View(await applicationDbContext.ToListAsync());
+            }
+            else
+            {
+                var applicationDbContext = _context.Notifications.Include(n => n.Recipient).Include(n => n.Sender).Include(n => n.Ticket).Where(u => u.RecipientId == btUser.Id || u.SenderId == btUser.Id);
+
+                return View(await applicationDbContext.ToListAsync());
+            }
+                
         }
 
         // GET: Notifications/Details/5
@@ -50,9 +72,12 @@ namespace TheBugTracker.Controllers
         // GET: Notifications/Create
         public IActionResult Create()
         {
-            ViewData["RecipientId"] = new SelectList(_context.Users, "Id", "FullName");
-            ViewData["SenderId"] = new SelectList(_context.Users, "Id", "FullName");
-            ViewData["TicketId"] = new SelectList(_context.Tickets, "Id", "Title");
+
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            ViewData["RecipientId"] = new SelectList(_context.Users.Where(u => u.CompanyId == companyId), "Id", "FullName");
+            ViewData["SenderId"] = new SelectList(_context.Users.Where(u => u.CompanyId == companyId), "Id", "FullName");
+            ViewData["TicketId"] = new SelectList(_context.Tickets.Where(u => u.Project.CompanyId == companyId), "Id", "Title");
             return View();
         }
 
@@ -69,9 +94,12 @@ namespace TheBugTracker.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RecipientId"] = new SelectList(_context.Users, "Id", "Id", notification.RecipientId);
-            ViewData["SenderId"] = new SelectList(_context.Users, "Id", "Id", notification.SenderId);
-            ViewData["TicketId"] = new SelectList(_context.Tickets, "Id", "Id", notification.TicketId);
+
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            ViewData["RecipientId"] = new SelectList(_context.Users.Where(u => u.CompanyId == companyId), "Id", "Id", notification.RecipientId);
+            ViewData["SenderId"] = new SelectList(_context.Users.Where(u => u.CompanyId == companyId), "Id", "Id", notification.SenderId);
+            ViewData["TicketId"] = new SelectList(_context.Tickets.Where(u => u.Project.CompanyId == companyId), "Id", "Id", notification.TicketId);
             return View(notification);
         }
 
@@ -88,9 +116,12 @@ namespace TheBugTracker.Controllers
             {
                 return NotFound();
             }
-            ViewData["RecipientId"] = new SelectList(_context.Users, "Id", "Id", notification.RecipientId);
-            ViewData["SenderId"] = new SelectList(_context.Users, "Id", "Id", notification.SenderId);
-            ViewData["TicketId"] = new SelectList(_context.Tickets, "Id", "Id", notification.TicketId);
+
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            ViewData["RecipientId"] = new SelectList(_context.Users.Where(u => u.CompanyId == companyId), "Id", "FullName", notification.RecipientId);
+            ViewData["SenderId"] = new SelectList(_context.Users.Where(u => u.CompanyId == companyId), "Id", "FullName", notification.SenderId);
+            ViewData["TicketId"] = new SelectList(_context.Tickets.Where(u => u.Project.CompanyId == companyId), "Id", "Id", notification.TicketId);
             return View(notification);
         }
 
@@ -126,9 +157,12 @@ namespace TheBugTracker.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["RecipientId"] = new SelectList(_context.Users, "Id", "Id", notification.RecipientId);
-            ViewData["SenderId"] = new SelectList(_context.Users, "Id", "Id", notification.SenderId);
-            ViewData["TicketId"] = new SelectList(_context.Tickets, "Id", "Id", notification.TicketId);
+
+            int companyId = User.Identity.GetCompanyId().Value;
+
+            ViewData["RecipientId"] = new SelectList(_context.Users.Where(u => u.CompanyId == companyId), "Id", "Id", notification.RecipientId);
+            ViewData["SenderId"] = new SelectList(_context.Users.Where(u => u.CompanyId == companyId), "Id", "Id", notification.SenderId);
+            ViewData["TicketId"] = new SelectList(_context.Tickets.Where(u => u.Project.CompanyId == companyId), "Id", "Id", notification.TicketId);
             return View(notification);
         }
 

@@ -1,14 +1,71 @@
 ﻿@model IEnumerable<TheBugTracker.Models.Notification>
+@using TheBugTracker.Extensions
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h4>Notifications</h4>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-actions">Create New</a>
 </p>
+
+<div class="notification-index-container">
+    <ul class="responsive-table">
+        <li class="table-header">
+            <div class="col col-1">Title</div>
+            <div class="col col-2">Message</div> 
+            <div class="col col-3">Created</div>
+            <div class="col col-4">From</div>
+            <div class="col col-5">To</div>
+            <div class="col col-6">Ticket</div>
+            <div class="col col-7">Viewed</div>
+        </li>
+        @if (Model.Count() == 0)
+        {
+            <li class="table-row">
+                <div class="col">No Notifications to display</div>
+            </li>
+        }
+        else
+        {
+
+            @foreach (var item in Model.OrderBy(d => d.Created))
+            {
+                <li class="table-row">
+                    <div class="col col-1" data-label="Title">
+                        <a asp-action="Details" asp-route-id="@item.Id" style="color:black">@item.Title</a>
+                    </div>
+                    <div class="col col-2" data-label="Message">
+                        @if (@item.Message.Length > 200)
+                        {
+                            <p>
+                                @Html.Raw(HtmlSubstring.RemoveHtml(item.Message, 40))
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                @Html.Raw(@item.Message)
+                            </p>
+                        }
+                    </div>
+                    <div class="col col-3" data-label="Created">@item.Created.ToString("MM/dd/yyyy")</div>
+                    <div class="col col-4" data-label="From">@item.Sender.FullName</div>
+                    <div class="col col-5" data-label="To">@item.Recipient.FullName</div>
+                    <div class="col col-6" data-label="Ticket">
+                        <a asp-action="Details" asp-controller="Tickets" asp-route-id="@item.TicketId">@item.TicketId</a>
+                    </div>
+                    <div class="col col-7" data-label="Viewed">
+                        <input type="checkbox" class="form-check-input" asp-for="@item.Viewed" disabled/>
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+@* 
 <table class="table">
     <thead>
         <tr>
@@ -68,4 +125,4 @@
         </tr>
 }
     </tbody>
-</table>
+</table> *@

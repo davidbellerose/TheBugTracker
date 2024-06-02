@@ -4,6 +4,57 @@
     ViewData["Title"] = "Index";
 }
 
+
+<h4>Invites</h4>
+
+<div class="invite-index-container">
+    <ul class="responsive-table">
+        <li class="table-header">
+            <div class="col col-1">Name</div>
+            <div class="col col-2">Invite Date</div>
+            <div class="col col-3">Join Date</div>
+            <div class="col col-4">Project</div>
+            <div class="col col-5">Is Valid</div>
+        </li>
+        <li class="table-row">
+            <div class="col col-1" data-label="Name">john Smith</div>
+            <div class="col col-2" data-label="Invite Date">05/01/24</div>
+            <div class="col col-3" data-label="Join Date">05/15/24</div>
+            <div class="col col-4" data-label="Project">Build a bug tracker</div>
+            <div class="col col-5" data-label="Is Valid">
+                <input type="checkbox" />
+            </div>
+        </li>
+        @if (Model.Count() == 0)
+        {
+            <li class="table-row">
+                <div class="col">No Invites to display</div>
+            </li>
+        }
+        else
+        {
+
+            @foreach (var item in Model.OrderBy(d => d.InviteDate))
+            {
+                <li class="table-row">
+                    <div class="col col-1" data-label="Name">john Smith@item.InviteeFirstName @item.InviteeLastName</div>
+                    <div class="col col-2" data-label="Invite Date">05/01/24@item.InviteDate.ToString("MM/dd/yyyy")</div>
+                    <div class="col col-3" data-label="Join Date">05/15024@item.JoinDate.ToString("MM/dd/yyyy")</div>
+                    <div class="col col-4" data-label="Project">Build a bug tracker@item.Project.Name</div>
+                    <div class="col col-5" data-label="Is Valid">
+                        <input type="checkbox" class="form-check-input" asp-for="@item.IsValid" disabled />
+                    </div>
+                </li>
+            }
+        }
+    </ul>
+</div>
+
+<div>
+    <a class="btn-back" onclick="javascript:history.back()">Back</a>
+</div>
+
+@* 
 <h1>Index</h1>
 
 <p>
@@ -49,47 +100,49 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.InviteDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JoinDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyToken)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsValid)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Company.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Project.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Invitor.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Invitee.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InviteeEmail)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InviteeFirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InviteeLastName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InviteDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JoinDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyToken)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsValid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Company.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Project.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Invitor.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Invitee.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InviteeEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InviteeFirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InviteeLastName)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+ *@

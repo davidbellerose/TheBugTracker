@@ -22,7 +22,7 @@
             <div class="col col-4">Start Date</div>
             <div class="col col-5">End Date</div>
         </li>
-        @foreach (var project in Model.Take(8).OrderByDescending(d => d.StartDate))
+        @foreach (var project in Model.OrderByDescending(d => d.StartDate))
         {
             BTUser projectManager = await ProjectService.GetProjectManagerAsync(project.Id);
             <li class="table-row">

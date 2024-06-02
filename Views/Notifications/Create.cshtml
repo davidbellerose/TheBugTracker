@@ -3,13 +3,11 @@
 @{
     ViewData["Title"] = "Create";
 }
-
-<h1>Create</h1>
-
-<h4>Notification</h4>
+<div class="crud-container">
+<h4>Create Notification</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-lg-7">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -19,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Message" class="control-label"></label>
-                <input asp-for="Message" class="form-control" />
+                <textarea asp-for="Message" class="form-control" rows="3"></textarea>
                 <span asp-validation-for="Message" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -47,15 +45,15 @@
             <div class="form-group">
                 <input type="submit" class="btn btn-actions" value="Create" />
                 <a onclick="javascript:history.back()" class="btn btn-cancel ms-2">Cancel</a>
-            </div>
+                </div>
+                <div>
+                    <a class="btn-back" onclick="javascript:history.back()">Back</a>
+                </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a class="btn-back" onclick="javascript:history.back()">Back</a>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
