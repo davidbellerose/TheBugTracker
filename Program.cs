@@ -12,7 +12,9 @@ namespace TheBugTracker
         {
             var host = CreateHostBuilder(args).Build();
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-            await DataUtility.ManageDataAsync(host);
+
+            //run seeder at startup
+            //await DataUtility.ManageDataAsync(host);
 
             host.Run();
 

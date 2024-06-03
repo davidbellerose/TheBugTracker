@@ -15,7 +15,7 @@
     {
         var company = Context.Companies.FirstOrDefault(c => c.Id == bTUser.CompanyId);
     }
-    
+
 }
 
 <!DOCTYPE html>
@@ -36,8 +36,8 @@
         <div class="header-wrapper">
             <div class="header-container">
                 <div class="header-brand">
-                    <img src="~/image/bblogo.svg" style="height: 60px;width:auto;"/><span class="bblogo">
-                        <img src="~/image/bigbug.png" style="height:60px;width: auto;"/>
+                    <img src="~/image/bblogo.svg" style="height: 60px;width:auto;" /><span class="bblogo">
+                        <img src="~/image/bigbug.png" style="height:60px;width: auto;" />
                     </span>
                 </div>
                 <div class="hamburger">
@@ -47,8 +47,9 @@
                 <div class="company-name">
                     @if (bTUser != null)
                     {
-                    var company = Context.Companies.FirstOrDefault(c => c.Id == bTUser.CompanyId);
-                    @company.Name;
+                        var company = Context.Companies.FirstOrDefault(c => c.Id == bTUser.CompanyId);
+                        @company.Name
+                        ;
                     }
                 </div>
                 <div class="header-login">
@@ -129,9 +130,9 @@
 
                         @if (User.IsInRole(nameof(Roles.Administrator)))
                         {
-                        <li class="dropdown" aria-labelledby="dropdown">
-                            <a class="nav-link" aria-expanded="false" href="javascript:void(0);"><i class="bi-building"></i>Company<i class="bi bi-chevron-right iChev"></i></a>
-                            <ul class="sidenav-second-level">
+                            <li class="dropdown" aria-labelledby="dropdown">
+                                <a class="nav-link" aria-expanded="false" href="javascript:void(0);"><i class="bi-building"></i>Company<i class="bi bi-chevron-right iChev"></i></a>
+                                <ul class="sidenav-second-level">
                                     @if (bTUser != null)
                                     {
                                         var company = Context.Companies.FirstOrDefault(c => c.Id == bTUser.CompanyId);
@@ -139,19 +140,19 @@
                                         <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Companies" asp-action="Details" asp-route-id="@company.Id"><span>&#10609</span>Details</a></li>
                                     }
                                     <li><a class="nav-link-a link-sub" asp-area="" asp-controller="UserRoles" asp-action="ManageUserRoles"><span>&#10609</span>Users & Roles</a></li>
-                                    <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Invites" asp-action="Index"><span>&#10609</span>Company Invites</a></li>
-                                    <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Invites" asp-action="Create"><span>&#10609</span>New Invite</a></li>
-                            </ul>
-                        </li>
+                                    @* <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Invites" asp-action="Index"><span>&#10609</span>Company Invites</a></li> *@
+                                    @* <li><a class="nav-link-a link-sub" asp-area="" asp-controller="Invites" asp-action="Create"><span>&#10609</span>New Invite</a></li> *@
+                                </ul>
+                            </li>
                         }
 
                     </ul>
                 }
                 else
                 {
-                 <ul class="mt-5">
+                    <ul class="mt-5">
                         <li><a class="nav-link-a text-white" asp-area="Identity" asp-page="/Account/Login">Sign In / Register</a></li>
-                 </ul>   
+                    </ul>
                 }
             </aside>
 
