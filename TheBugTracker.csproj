@@ -4,6 +4,7 @@
 	  <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>aspnet-TheBugTracker-2c8fb22d-2555-4a22-a276-4f775c51b33f</UserSecretsId>
     <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+	  <InvariantGlobilization>true</InvariantGlobilization>
   </PropertyGroup>
 
   <ItemGroup>
