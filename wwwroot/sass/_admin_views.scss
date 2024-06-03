@@ -3,11 +3,6 @@
     margin-left: auto;
     margin-right: auto;
 
-    input[type=checkbox]{
-        //max-height: 40px;
-        //height: auto;
-    }
-
     .responsive-table {
         margin: 0;
         padding: 0;
@@ -42,7 +37,7 @@
         }
 
         .col-1 {
-            flex-basis: 10%;
+            flex-basis: 15%;
             padding: 0 3px;
         }
 
@@ -51,7 +46,7 @@
         }
 
         .col-3 {
-            flex-basis: 7%;
+            flex-basis: 15%;
         }
 
         .col-4 {
@@ -63,7 +58,7 @@
         }
 
         .col-6 {
-            flex-basis: 5%;
+            flex-basis: 7%;
         }
 
         .col-7 {

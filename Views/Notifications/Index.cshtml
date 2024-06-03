@@ -1,8 +1,12 @@
 ﻿@model IEnumerable<TheBugTracker.Models.Notification>
 @using TheBugTracker.Extensions
+@using Microsoft.AspNetCore.Identity
+@using TheBugTracker.Services.Interfaces;
 
+@inject UserManager<BTUser> UserManager
 @{
     ViewData["Title"] = "Index";
+    BTUser btUser = await UserManager.GetUserAsync(User);
 }
 
 <h4>Notifications</h4>
@@ -11,11 +15,152 @@
     <a asp-action="Create" class="btn btn-actions">Create New</a>
 </p>
 
+<ul class="nav nav-tabs d-none d-lg-flex" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link chart-btn active" id="inbox-tab" data-bs-toggle="tab" data-bs-target="#inbox-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Inbox</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link chart-btn" id="sent-tab" data-bs-toggle="tab" data-bs-target="#sent-tab-pane" type="button" role="tab" aria-controls="sent-tab-pane" aria-selected="false">Sent</button>
+    </li>
+</ul>
+
+<div class="tab-content accordion" id="myTabContent">
+    <div class="tab-pane fade show active accordion-item" id="inbox-tab-pane" role="tabpanel" aria-labelledby="inbox-tab" tabindex="0">
+        <h2 class="accordion-header d-lg-none" id="headingOne">
+            <button class="accordion-button chart-btn" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Inbox
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show  d-lg-block" aria-labelledby="headingOne" data-bs-parent="#myTabContent">
+            <div class="notification-index-container">
+                <ul class="responsive-table">
+                    <li class="table-header">
+                        <div class="col col-1">Title</div>
+                        <div class="col col-2">Message</div>
+                        <div class="col col-3">Created</div>
+                        <div class="col col-4">From</div>
+                        <div class="col col-5">To</div>
+                        <div class="col col-6">Ticket</div>
+                        <div class="col col-7">Viewed</div>
+                    </li>
+                    @if (Model.Count() == 0)
+                    {
+                        <li class="table-row">
+                            <div class="col">No Notifications to display</div>
+                        </li>
+                    }
+                    else
+                    {
+
+                        @foreach (var item in Model.Where(u => u.Recipient.Id == btUser.Id).OrderBy(d => d.Created))
+                        {
+                            <li class="table-row">
+                                <div class="col col-1" data-label="Title">
+                                    <a asp-action="Details" asp-route-id="@item.Id" style="color:black">@item.Title</a>
+                                </div>
+                                <div class="col col-2" data-label="Message">
+                                    @if (@item.Message.Length > 200)
+                                    {
+                                        <p>
+                                            @Html.Raw(HtmlSubstring.RemoveHtml(item.Message, 40))
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            @Html.Raw(@item.Message)
+                                        </p>
+                                    }
+                                </div>
+                                <div class="col col-3" data-label="Created">@item.Created.ToString("MM/dd/yyyy")</div>
+                                <div class="col col-4" data-label="From">@item.Sender.FullName</div>
+                                <div class="col col-5" data-label="To">@item.Recipient.FullName</div>
+                                <div class="col col-6" data-label="Ticket">
+                                    <a asp-action="Details" asp-controller="Tickets" asp-route-id="@item.TicketId">@item.TicketId</a>
+                                </div>
+                                <div class="col col-7" data-label="Viewed">
+                                    <input type="checkbox" class="form-check-input" asp-for="@item.Viewed" disabled />
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    @* Sent *@
+    <div class="tab-pane fade accordion-item" id="sent-tab-pane" role="tabpanel" aria-labelledby="sent-tab" tabindex="0">
+        <h2 class="accordion-header d-lg-none" id="headingTwo">
+            <button class="accordion-button chart-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                Sent
+            </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse d-lg-block" aria-labelledby="headingTwo" data-bs-parent="#myTabContent">
+            <div class="notification-index-container">
+                <ul class="responsive-table">
+                    <li class="table-header">
+                        <div class="col col-1">Title</div>
+                        <div class="col col-2">Message</div>
+                        <div class="col col-3">Created</div>
+                        <div class="col col-4">From</div>
+                        <div class="col col-5">To</div>
+                        <div class="col col-6">Ticket</div>
+                        <div class="col col-7">Viewed</div>
+                    </li>
+                    @if (Model.Count() == 0)
+                    {
+                        <li class="table-row">
+                            <div class="col">No Notifications to display</div>
+                        </li>
+                    }
+                    else
+                    {
+
+                        @foreach (var item in Model.Where(u => u.Sender.Id == btUser.Id).OrderBy(d => d.Created))
+                        {
+                            <li class="table-row">
+                                <div class="col col-1" data-label="Title">
+                                    <a asp-action="Details" asp-route-id="@item.Id" style="color:black">@item.Title</a>
+                                </div>
+                                <div class="col col-2" data-label="Message">
+                                    @if (@item.Message.Length > 200)
+                                    {
+                                        <p>
+                                            @Html.Raw(HtmlSubstring.RemoveHtml(item.Message, 40))
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p>
+                                            @Html.Raw(@item.Message)
+                                        </p>
+                                    }
+                                </div>
+                                <div class="col col-3" data-label="Created">@item.Created.ToString("MM/dd/yyyy")</div>
+                                <div class="col col-4" data-label="From">@item.Sender.FullName</div>
+                                <div class="col col-5" data-label="To">@item.Recipient.FullName</div>
+                                <div class="col col-6" data-label="Ticket">
+                                    <a asp-action="Details" asp-controller="Tickets" asp-route-id="@item.TicketId">@item.TicketId</a>
+                                </div>
+                                <div class="col col-7" data-label="Viewed">
+                                    <input type="checkbox" class="form-check-input" asp-for="@item.Viewed" disabled />
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@*
 <div class="notification-index-container">
     <ul class="responsive-table">
         <li class="table-header">
             <div class="col col-1">Title</div>
-            <div class="col col-2">Message</div> 
+            <div class="col col-2">Message</div>
             <div class="col col-3">Created</div>
             <div class="col col-4">From</div>
             <div class="col col-5">To</div>
@@ -65,7 +210,9 @@
         }
     </ul>
 </div>
-@* 
+ *@
+
+@*
 <table class="table">
     <thead>
         <tr>

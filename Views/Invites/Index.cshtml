@@ -22,7 +22,7 @@
             <div class="col col-3" data-label="Join Date">05/15/24</div>
             <div class="col col-4" data-label="Project">Build a bug tracker</div>
             <div class="col col-5" data-label="Is Valid">
-                <input type="checkbox" />
+                <input type="checkbox" class="form-check-input" disabled/>
             </div>
         </li>
         @if (Model.Count() == 0)
@@ -37,10 +37,10 @@
             @foreach (var item in Model.OrderBy(d => d.InviteDate))
             {
                 <li class="table-row">
-                    <div class="col col-1" data-label="Name">john Smith@item.InviteeFirstName @item.InviteeLastName</div>
-                    <div class="col col-2" data-label="Invite Date">05/01/24@item.InviteDate.ToString("MM/dd/yyyy")</div>
-                    <div class="col col-3" data-label="Join Date">05/15024@item.JoinDate.ToString("MM/dd/yyyy")</div>
-                    <div class="col col-4" data-label="Project">Build a bug tracker@item.Project.Name</div>
+                    <div class="col col-1" data-label="Name">@item.InviteeFirstName @item.InviteeLastName</div>
+                    <div class="col col-2" data-label="Invite Date">@item.InviteDate.ToString("MM/dd/yyyy")</div>
+                    <div class="col col-3" data-label="Join Date">@item.JoinDate.ToString("MM/dd/yyyy")</div>
+                    <div class="col col-4" data-label="Project">@item.Project.Name</div>
                     <div class="col col-5" data-label="Is Valid">
                         <input type="checkbox" class="form-check-input" asp-for="@item.IsValid" disabled />
                     </div>

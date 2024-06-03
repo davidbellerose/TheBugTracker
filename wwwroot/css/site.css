@@ -87,6 +87,13 @@ a:focus {
   margin-bottom: 1rem;
 }
 
+.form-check-input {
+  height: 1.5rem;
+  width: 1.5rem;
+  margin-right: 0.5rem;
+  border-color: #176B87;
+}
+
 /*****************************************************************************************
 
 	FOOTER                                                                  FOOTER
@@ -1355,12 +1362,6 @@ a:focus {
 .crud-container #imageFileData {
   margin-top: 1.8rem;
 }
-.crud-container .form-check-input {
-  height: 1.5rem;
-  width: 1.5rem;
-  margin-right: 0.5rem;
-  border-color: #176B87;
-}
 
 .detail-card-container {
   /*    display: flex;
@@ -1627,14 +1628,14 @@ a:focus {
   -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
 }
 .notification-index-container .responsive-table .col-1 {
-  flex-basis: 10%;
+  flex-basis: 15%;
   padding: 0 3px;
 }
 .notification-index-container .responsive-table .col-2 {
   flex-basis: 25%;
 }
 .notification-index-container .responsive-table .col-3 {
-  flex-basis: 7%;
+  flex-basis: 15%;
 }
 .notification-index-container .responsive-table .col-4 {
   flex-basis: 15%;
@@ -1643,7 +1644,7 @@ a:focus {
   flex-basis: 15%;
 }
 .notification-index-container .responsive-table .col-6 {
-  flex-basis: 5%;
+  flex-basis: 7%;
 }
 .notification-index-container .responsive-table .col-7 {
   flex-basis: 5%;
