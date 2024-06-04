@@ -484,50 +484,6 @@ PROJECT TICKET COUNT               canvas.js                   PROJECT TICKET CO
     @*
 *************************************************************************************
 
-TICKET PRIORITY               canvas.js                              TICKET PRIORITY
-not working
-finish ajax
-****************************************************************************************** *@
-    <script>
-
-        CanvasJS.addColorSet("colors",
-            [//colorSet Array
-
-                "#008000",
-                "#ff8c00",
-                "#ff0000",
-                "#ff00ff"
-            ]);
-        var chart = new CanvasJS.Chart("ticketPriority", {
-            animationEnabled: true,
-            theme: "light2", // "light1", "light2", "dark1", "dark2",
-            colorSet: "colors",
-            toolTip: {
-                enabled: true,
-                animationEnabled: true,
-                shared: false
-            },
-            data: [{
-                type: "column",
-                yValueFormatString: "#",
-                dataPoints: [
-                    { label: "@nameof(BTTicketStatus.Development)", y: @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Development)).Count() },
-                    { label: "@nameof(BTTicketStatus.New)", y: @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.New)).Count()},
-                    { label: "@nameof(BTTicketStatus.Resolved)", y: @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count() },
-                    { label: "@nameof(BTTicketStatus.Testing)", y: @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Testing)).Count() },
-                ]
-            }]
-        });
-        chart.render();
-
-        $(".chart-btn").click(function () {
-            chart.render();
-        });
-    </script>
-
-    @*
-*************************************************************************************
-
 TICKET STATUS               canvas.js                              TICKET STATUS
 
 ****************************************************************************************** *@
@@ -549,7 +505,7 @@ TICKET STATUS               canvas.js                              TICKET STATUS
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Development)).Count(),
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Testing)).Count(),
         @Model.Tickets.Where(t => t.TicketStatus.Name == nameof(BTTicketStatus.Resolved)).Count()
-                                                                                                                                                                                                                                                                    ],
+                                                                                                                                                                                                                                                                                    ],
                     backgroundColor: [
                         'rgba(138, 218, 178, 0.9)',
                         'rgba(56, 135, 190, 0.9)',
@@ -582,6 +538,52 @@ TICKET STATUS               canvas.js                              TICKET STATUS
             type: 'doughnut',
             data: donutData,
             options: donutOptions
+        });
+    </script>
+
+
+
+    @*
+*************************************************************************************
+
+TICKET PRIORITY               canvas.js                              TICKET PRIORITY
+not working
+finish ajax
+****************************************************************************************** *@
+    <script>
+
+        CanvasJS.addColorSet("colors",
+            [//colorSet Array
+
+                "#008000",
+                "#ff8c00",
+                "#ff0000",
+                "#ff00ff"
+            ]);
+        var chart = new CanvasJS.Chart("ticketPriority", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2",
+            colorSet: "colors",
+            toolTip: {
+                enabled: true,
+                animationEnabled: true,
+                shared: false
+            },
+            data: [{
+                type: "column",
+                yValueFormatString: "#",
+                dataPoints: [
+                    { label: "@nameof(BTTicketPriority.Low)", y: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Low)).Count() },
+                    { label: "@nameof(BTTicketPriority.Medium)", y: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Medium)).Count()},
+                    { label: "@nameof(BTTicketPriority.High)", y: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.High)).Count() },
+                    { label: "@nameof(BTTicketPriority.Urgent)", y: @Model.Tickets.Where(t => t.TicketPriority.Name == nameof(BTTicketPriority.Urgent)).Count() },
+                ]
+            }]
+        });
+        chart.render();
+
+        $(".chart-btn").click(function () {
+            chart.render();
         });
     </script>
 
