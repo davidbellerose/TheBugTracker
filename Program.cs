@@ -14,7 +14,7 @@ namespace TheBugTracker
             AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             //run seeder at startup
-            await DataUtility.ManageDataAsync(host);
+            //await DataUtility.ManageDataAsync(host);
 
             host.Run();
 
