@@ -1261,6 +1261,7 @@ a:focus {
   padding: 25px 30px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 25px;
 }
 .tickets-container .responsive-table .table-header {
@@ -1276,28 +1277,29 @@ a:focus {
 .tickets-container .responsive-table .table-row {
   background-color: #ffffff;
   border-radius: 7px;
-  border-radius: 7px;
   box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
   -webkit-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
   -moz-box-shadow: -1px -2px 12px -4px rgba(16, 14, 14, 0.61);
 }
 .tickets-container .responsive-table .col-1 {
-  flex-basis: 35%;
+  flex-basis: 25%;
 }
 .tickets-container .responsive-table .col-2 {
   flex-basis: 15%;
 }
 .tickets-container .responsive-table .col-3 {
-  flex-basis: 20%;
+  flex-basis: 25%;
+  padding-left: 3px;
 }
 .tickets-container .responsive-table .col-4 {
   flex-basis: 10%;
+  padding-right: 3px;
 }
 .tickets-container .responsive-table .col-5 {
   flex-basis: 15%;
 }
 .tickets-container .responsive-table .col-6 {
-  flex-basis: 5%;
+  flex-basis: 10%;
 }
 .tickets-container .responsive-table .col-6 i, .tickets-container .responsive-table .col-6 a {
   display: flex;
@@ -1306,8 +1308,10 @@ a:focus {
   text-decoration: none;
   color: #265073;
   font-size: 2rem;
-  padding: 0;
-  margin: 0;
+  padding: 4px;
+  margin-right: 0px;
+  line-height: 0;
+  max-height: 40px;
 }
 .tickets-container .responsive-table .col-6 i:hover {
   color: #176B87;
@@ -1333,6 +1337,9 @@ a:focus {
     content: attr(data-label);
     flex-basis: 50%;
     text-align: left;
+  }
+  .tickets-container .responsive-table .col-6 i {
+    justify-content: start !important;
   }
 }
 @media all and (max-width: 550px) {

@@ -58,6 +58,9 @@
                         <label class="control-label">Developer</label>
                         <div class="mb-1">Currently Assigned: @developer.FullName</div>
                         <select asp-for="DeveloperUserId" class="form-control" asp-items="@ViewBag.Developers">
+                            <option value="none" selected disabled hidden>
+                                &#11167;
+                            </option>
                         </select>
                     </div>
                 }
