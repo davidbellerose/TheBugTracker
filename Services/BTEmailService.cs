@@ -30,7 +30,7 @@ namespace TheBugTracker.Services
             //added this
             //var emailSender = _mailSettings.Mail ?? Environment.GetEnvironmentVariable("Email");
 
-            email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
+            email.Sender = MailboxAddress.Parse(_mailSettings.Email);
             email.To.Add(MailboxAddress.Parse(emailTo));
             email.Subject = subject;
 
@@ -54,8 +54,8 @@ namespace TheBugTracker.Services
                 //smtp.Connect(host, port, SecureSocketOptions.StartTls);
                 //smtp.Authenticate(emailSender, password);
 
-                smtp.Connect(_mailSettings.Host, _mailSettings.Port, SecureSocketOptions.StartTls);
-                smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
+                smtp.Connect(_mailSettings.EmailHost, _mailSettings.EmailPort, SecureSocketOptions.StartTls);
+                smtp.Authenticate(_mailSettings.Email, _mailSettings.EmailPassword);
 
                 await smtp.SendAsync(email);
                 smtp.Disconnect(true);
