@@ -3,7 +3,7 @@
 
 # BigBug
 
-![BigBug](wwwroot/assets/image/bigbug-logo.svg)
+![BigBug](wwwroot/image/bigbug-logo.svg)
 ============
 
 ### This is an ASP.NET MVC C# relational database application.
